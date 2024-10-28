@@ -14,7 +14,19 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('username');
+            $table->string('sex')->nullable(); //1:nő, ferfi: 0
+            $table->date('birthdate');
+            $table->date('lastlogin');
+            $table->tinyInteger('is_vip')->nullable(); //1: igen VIP tag
+            $table->tinyInteger('height')->nullable();
+            $table->tinyInteger('weight')->nullable();
+            $table->text('hairColor')->nullable();
+            $table->text('eyeColor')->nullable();
+            $table->text('work')->nullable();
+            $table->text('pet')->nullable();
+            $table->integer('marital_status_id')->nullable(); //csaladi statusz 1: Egyedülálló, 2. Házas, 3. Párkapcsolatban, 4. Bonyolult, 5. Elvált, 6. Özvegy
+            $table->string('email')->unique('email_index');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
