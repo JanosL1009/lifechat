@@ -23,9 +23,19 @@
 .room {
     display: flex;
     align-items: center;
-    background-color: #39414f;
+    background-color: #4C89CD;
     padding: 10px;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
+    border-radius: 5px;
+    color: white;
+}
+
+.room:hover {
+    display: flex;
+    align-items: center;
+    background-color: #8a93a3;
+    padding: 10px;
+    /*margin-bottom: 10px;*/
     border-radius: 5px;
     color: white;
 }
@@ -227,35 +237,12 @@
         }
     }
 </style>
-<div class="col-12">
+<div class="col-12 col-md-12">
     <div class="chat-container">
-        <div class="sidebar">
-            <div class="room">
-                <img src="{{ asset('img/avatar-3.jpg') }}" alt="Room Icon" class="room-icon">
-                <div class="room-details">
-                    <span class="room-name">15+ korosztály</span>
-                    <div class="room-count-icons">
-                        <span class="room-count">Létszám: <span class="room-number">23</span></span>
-                        <i class="fas fa-info-circle"></i> 
-                        <i class="fas fa-star"></i> 
-                    </div>
-                </div>
-            </div>
-        </div>        
-        
+             
         <div class="chat-box">
-            <div class="chat-header">
-                <div class="header-left">
-                    <i class="fas fa-user"></i> 
-                    <i class="fas fa-cog"></i>
-                </div>
-                <div class="header-right">
-                    <i class="fas fa-sign-out-alt"></i> 
-                </div>
-            </div>
-            <div class="chat-header">
-                <span>Aktív szoba neve felirat</span>
-            </div>
+            
+           
             <div class="chat-messages">
                 <p><span class="moderator">ModiUser-Moderator:</span> Szépen írjon mindenki</p>
                 <p><span class="user1">User1:</span> Hello, mi van itt?</p>
