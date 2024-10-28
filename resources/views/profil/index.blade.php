@@ -27,8 +27,8 @@
                         <button class="btn btn-primary" id="editBtn">Szerkesztés</button>
                     </div>
                     <h6>Házassági állapot: {{$maritalstatus}}</h6>
-                    <h6>Magasság: {{$height}}</h6>
-                    <h6>Súly: {{$weight}}</h6>
+                    <h6>Magasság: {{$height}} cm</h6>
+                    <h6>Súly: {{$weight}} kg</h6>
                     <h6>Hajszín: {{$haircolor}}</h6>
                     <h6>Szemszín: {{$eyecolor}}</h6>
                     <h6>Munkahely: {{$work}}</h6>
