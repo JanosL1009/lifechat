@@ -97,10 +97,17 @@
                 <div class="col-lg-7 col-md-7 col-6">
                   <div class="header-right">
                    
-                    <div class="notification-box ml-15 d-none d-md-flex">
-                       <a href="#"> <i class="fas fa-sign-out-alt"></i> </a>
-                     
-                    </div>
+                    @auth
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="logout">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            Kijelentkezés
+                        </a>
+                    @endauth
+
                   
                     
                     
@@ -133,6 +140,5 @@
       
       
       <script src="http://localhost/admintemplate/assets/js/main.js"></script>
-
 </body>
 </html>

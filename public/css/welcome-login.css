@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #C6FCFC !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.speech-bubbles {
+    display: flex;
+    gap: 10px;
+}
+
+.bubble {
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+}
+
+.logo {
+    width: 200px;
+    margin-right: 10px;
+}
+
+.buttons {
+    margin-bottom: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 0px 10px;
+    margin: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    color: white;
+}
+
+.register { background-color: #673ab7; }
+.login { background-color: #8bc34a; }
+.guest-login { background-color: #ffeb3b; color: #333; }
+
+.login-form {
+    background-color: #90caf9;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.login-form h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.login-form label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.forgot-password {
+    display: block;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+    text-decoration: none;
+    text-align: left;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.welcomepng {
+    width: 100%; 
+    height: auto; 
+    max-height: 347px;
+    display: block;
+    margin: 0 auto; 
+    margin-bottom: 10px;
+}
