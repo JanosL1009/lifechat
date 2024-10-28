@@ -109,7 +109,8 @@
     }
 
     .chat-messages {
-        flex: 1;
+     /*   flex: 1; */
+        height: 400px;
         padding: 10px;
         overflow-y: auto;
         background-color: #000;
@@ -132,7 +133,7 @@
     }
 
     .chat-input {
-    display: flex;
+    width: 80%;
     padding: 10px;
     border-top: 1px solid #39414f;
     color: black;
@@ -150,7 +151,8 @@
         max-width: 400px; /* Maximális szélesség, ha szeretnéd */
     }
 
-    .chat-input button {
+    button#msgSendBtn {
+        
         padding: 10px;
         border: none;
         background-color: #39414f;
@@ -161,7 +163,7 @@
 
 
     .user-list {
-        width: 20%;
+        -max-height: 200px;
         background-color: #2e2e2e;
         padding: 10px;
     }
@@ -238,41 +240,39 @@
         font-size: 16px;
         border-bottom: 1px solid #555;
     }
-    @media (min-width: 768px) {
-            .chat-container {
-                flex-direction: row; 
-            }
-
-            .sidebar {
-                width: 20%; 
-            }
-
-            .chat-box {
-                width: 60%; 
-            }
-
-            .user-list {
-                width: 20%; 
-            }
-        }
+ 
 </style>
-<div class="col-12 col-md-12">
-    <div class="chat-container">
-             
-        <div class="chat-box">
-            
-           
+<div class="row">
+    <div class="col-12 col-md-9">
+        
+        <div class="row">
             <div class="chat-messages">
                 <p><span class="moderator">ModiUser-Moderator:</span> Szépen írjon mindenki</p>
                 <p><span class="user1">User1:</span> Hello, mi van itt?</p>
                 <p><span class="user2">User2:</span> Szia, hogy vagy??</p>
             </div>
-            <div class="chat-input">
-                {{-- <input type="text" placeholder="Írj üzenetet..." name="sendmessage" id="sendmessage" /> --}}
-                <textarea name="sendmessage" id="sendmessage" class="form-control" cols="10" rows="10"></textarea>
-                <button>Küldés</button>
-            </div>
         </div>
+
+        <div class="row">
+            <div class="col-12 col-md-10">
+                
+                    {{-- <input type="text" placeholder="Írj üzenetet..." name="sendmessage" id="sendmessage" /> --}}
+                    <textarea name="sendmessage" id="sendmessage" class="form-control" ></textarea>
+                   
+                
+            </div>
+            <div class="col-12 col-md-2">
+                <button id="msgSendBtn">Küldés</button>
+            </div>
+            
+        </div>
+               
+           
+           
+       
+    </div>
+
+    <div class="col-12 col-md-3">
         <div class="user-list">
             <div class="user">
                 <img src="{{ asset('img/avatar-3.jpg') }}" alt="User avatar" class="user-avatar">
@@ -300,7 +300,47 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Lekérdezi az adatokat a getRooms végpontról
+    fetch('{{route('getRooms')}}')
+        .then(response => response.json())
+        .then(data => {
+            // Szoba lista hozzáadása a DOM-hoz
+            const sidebarNav = document.querySelector('.sidebar-nav');
+
+            data.forEach(room => {
+                // Új szoba HTML szerkezete
+                const roomDiv = document.createElement('div');
+                roomDiv.id = `room-${room.id}`;
+                roomDiv.classList.add('room', 'lighter-blue');
+
+                roomDiv.innerHTML = `
+                    <img src="/images/${room.picture}" alt="Room Icon" class="room-icon">
+                    <div class="room-details">
+                        <span class="room-name">${room.name}</span>
+                        <div class="room-count-icons">
+                            <span class="room-count">Létszám: <span class="room-number">${room.number_of_employees}</span></span>
+                            <i class="fas fa-info-circle"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                `;
+
+                // Szoba hozzáadása a sidebarNav konténerhez
+                sidebarNav.appendChild(roomDiv);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+
+
+</script>
+
 @endsection
+
 <script type="importmap">
     {
         "imports": {
