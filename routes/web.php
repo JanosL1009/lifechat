@@ -15,3 +15,4 @@ Route::get('/chatek', [App\Http\Controllers\ChatController::class, 'index'])->na
 
 
 Route::get('getRooms', [App\Http\Controllers\ApiController::class, 'getRooms'])->name('getRooms');
+Route::post('setRoomMessage', [App\Http\Controllers\ChatRoomController::class, 'setRoomMessage'])->name('setRoomMessage');

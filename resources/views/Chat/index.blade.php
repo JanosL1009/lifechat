@@ -302,6 +302,7 @@
 </div>
 
 <script>
+    var room_id = 1;
 document.addEventListener("DOMContentLoaded", function() {
     // Lekérdezi az adatokat a getRooms végpontról
     fetch('{{route('getRooms')}}')
@@ -336,10 +337,50 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+document.getElementById('msgSendBtn').addEventListener('click', function() {
+    // Az értékek beolvasása az űrlap mezőkből vagy más forrásokból
+    const roomID = room_id;
+    const message = document.getElementById('sendmessage').value;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    // Kérés küldése a szerverre
+    fetch('{{route('setRoomMessage')}}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json',
+        },
+        // Az üzenet küldése paraméterekben
+        body: JSON.stringify({
+            room_id: roomID,
+            msg: message
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 1) {
+            alert("Üzenet sikeresen elküldve!");
+        } else {
+            alert("Hiba történt: " + data.error);
+        }
+    })
+    .catch(error => {
+        console.error("Hálózati hiba:", error);
+    });
+});
+
+
 
 </script>
 
+
+<script>
+ 
+</script>
+
 @endsection
+
 
 <script type="importmap">
     {
