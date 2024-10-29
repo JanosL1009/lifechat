@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
+use App\Models\PermissionToUser;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-        // dd($user);
+        $userid = $user->id;
+
+        $permissions = DB::table('permission_to_users')
+        ->where('user_id',$userid)
+        ->first();
+
         $sex = $this->GetSex();
         $age = $this->GetCurrentAge();
         $height = $user->height ?? "Nincs kitöltve";
@@ -27,10 +35,14 @@ class ProfileController extends Controller
         $lastlogin = $user->lastlogin ?? "Ismeretlen";
         $registered = $user->created_at ?? "Ismeretlen";
         $szuletesiido = $user->birthdate ?? "Ismeretlen";
+        $jogosultsag = $this->GetPermission();
+
+
         return view('profil.index')->with('user',$user)->with('sex',$sex)->with('age',$age)->with('height',$height)
        ->with('weight',$weight)->with('haircolor',$haircolor)->with('eyecolor',$eyecolor)->with('work',$work)
        ->with('pet',$pet)->with('maritalstatus',$maritalstatus)->with('vip',$vip)->with('lastlogin',$lastlogin)
-       ->with('registered',$registered)->with('szuletesiido',$szuletesiido);
+       ->with('registered',$registered)->with('szuletesiido',$szuletesiido)
+       ->with('permissions',$permissions)->with('jogosultsag',$jogosultsag);
     }
 
     public function EditProfile(Request $request, $id)
@@ -38,30 +50,79 @@ class ProfileController extends Controller
     
         $user = User::findOrFail($id);
         // dd($user);
-        
         $user->username = $request->input('username');
         $user->email = $request->input('email');
         $user->sex = $request->input('sex');
-        $user->birthdate = Carbon::createFromDate($request->input('year'), $request->input('month'), $request->input('day'));
+        $user->birthdate = $request->input('birthdate');
         $user->marital_status_id = $request->input('marital_status');
-        $user->height = $request->input('height');
-        $user->weight = $request->input('weight');
+        $user->height = $request->input('height'); 
+        $user->weight = $request->input('weight'); 
         $user->hairColor = $request->input('haircolor'); 
         $user->eyeColor = $request->input('eyecolor'); 
         $user->work = $request->input('work');
         $user->pet = $request->input('pet');
-    
-        // Mentés az adatbázisba
+        
         try {
-            $user->save();
-            return redirect()->route('user.profile', $id)->with('success', 'Profil sikeresen frissítve.');
+            if($user->save())
+            {
+                return redirect()->route('user.profile', $id)->with('success', 'Profil sikeresen frissítve.');
+            }
         } catch (Exception $error) {
             return redirect()->back()->with('error', 'Hiba történt a profil mentésekor.');
         }
     }
+
+    // public function EditProfileAdmin(Request $request, $id)
+    // {
+    
+    //     $user = User::findOrFail($id);
+    //     // dd($user);
+        
+    //     $user->username = $request->input('username');
+    //     $user->email = $request->input('email');
+    //     $user->sex = $request->input('sex');
+    //     $user->birthdate = $request->input('birthdate');
+    //     $user->marital_status_id = $request->input('marital_status');
+    //     $user->height = $request->input('height');
+    //     $user->weight = $request->input('weight');
+    //     $user->hairColor = $request->input('haircolor'); 
+    //     $user->eyeColor = $request->input('eyecolor'); 
+    //     $user->work = $request->input('work');
+    //     $user->pet = $request->input('pet');
+        
+    //     $permissions = PermissionToUser::find($id);
+    //     $permissions->permission_id = $request->input('permission');
+
+    //     try {
+    //         if($user->save() && $permissions->save())
+    //         {
+    //             return redirect()->route('user.profile', $id)->with('success', 'Profil sikeresen frissítve.');
+    //         }
+    //     } catch (Exception $error) {
+    //         return redirect()->back()->with('error', 'Hiba történt a profil mentésekor.');
+    //     }
+    // }
     
 
+    public function GetPermission()
+    {
+        $userid = Auth::user()->id; 
 
+        $permissions = DB::table('permission_to_users')
+        ->where('user_id',$userid)
+        ->first();
+        switch ($permissions->permission_id) {
+            case 1:
+                return 'Adminisztrátor';
+            case 2:
+                return 'Operátor';
+            case 3:
+                return 'Felhasználó';
+            default:
+                return 'Ismeretlen felhasználói szint!'; 
+        }
+    }
+    
 
     public function GetVip()
     {

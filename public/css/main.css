@@ -5970,3 +5970,11 @@ h6,
   border-radius: 4px; /* Lekerekített sarkok */
   border: 1px solid #ccc; /* Határ */
 }
+.lifechatlogo{
+  text-align: center;
+  height: 130px;
+  width: auto;
+}
+.roomtitle{
+  text-align: center;
+}

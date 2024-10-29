@@ -69,12 +69,6 @@
 
  @extends('layouts.app')
 @section('content')
-<style>
-    .lifechatlogo
-    {
-        text-align: center;
-    }
-</style>
     <div class="container">
         <div class="col-md-12">
             <div class="row">

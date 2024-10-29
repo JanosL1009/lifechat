@@ -261,6 +261,7 @@
                     <h6>VIP: {{$vip}}</h6>
                     <h6>Regisztrált: {{$registered}}</h6>
                     <h6>Utoljára járt itt: {{$lastlogin}}</h6>
+                    <h6>Felhasználói szint: {{$jogosultsag}}</h6>
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex justify-content-between align-items-center">
@@ -279,8 +280,7 @@
         </div>
         <div class="card-footer" id="cardFooter" style="display: none;">
             <form action="{{route('felhasznalo.profil.modositas', $user->id)}}" method="POST"> 
-                 {{-- {{ route('user.update', $user->id) }} --}}
-                @csrf <!-- CSRF token -->
+                @csrf 
                 <div class="row">
                     <div class="col-md-4">
                         <label for="username">Felhasználónév:</label>
@@ -290,7 +290,7 @@
                         <input type="email" name="email" id="email" class="form-control" value="{{$user->email}}">
                         
                         <label for="sex">Nem:</label>
-                        <select name="sex" id="sex" class="form-control">
+                        <select name="sex" id="sex" class="form-select">
                             <option value="">Válasszon...</option>
                             <option value="1" {{ $user->sex == '1' ? 'selected' : '' }}>Férfi</option>
                             <option value="2" {{ $user->sex == '2' ? 'selected' : '' }}>Nő</option>
@@ -305,7 +305,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="marital_status">Házassági állapot:</label>
-                        <select name="marital_status" id="marital_status" class="form-control">
+                        <select name="marital_status" id="marital_status" class="form-select">
                             <option value="" selected disabled>Válasszon...</option>
                             <option value="1" {{$user->marital_status_id == '1' ? 'selected' : ''}}>Egyedülálló</option>
                             <option value="2" {{$user->marital_status_id == '2' ? 'selected' : ''}}>Házas</option>
@@ -315,7 +315,7 @@
 
                         <label for="height">Magasság:</label>
                         <div class="input-group">
-                            <input type="text" name="height" id="height" class="form-control" value="{{$user->height}}">
+                            <input type="number" min="0" name="height" id="height" class="form-control" value="{{$user->height}}">
                             <div class="input-group-append">
                                 <span class="input-group-text">cm</span>
                             </div>
@@ -323,11 +323,11 @@
 
                         <label for="weight">Súly:</label>
                         <div class="input-group">
-                            <input type="text" name="weight" id="weight" class="form-control" value="{{$user->weight}}">
+                            <input type="number" min="0" name="weight" id="weight" class="form-control" value="{{$user->weight}}">
                             <div class="input-group-append">
                                 <span class="input-group-text">kg</span>
                             </div>
-                        </div>                    
+                        </div>
                         <label for="haircolor">Hajszín:</label>
                         <input type="text" name="haircolor" id="haircolor" class="form-control" value="{{$user->hairColor}}">
                     </div>
@@ -341,9 +341,17 @@
                         
                         <label for="pet">Háziállat:</label>
                         <input type="text" name="pet" id="pet" class="form-control" value="{{$user->pet}}">
+
+                        {{-- <label for="permission">Felhasználó szint:</label>
+                        <select name="permission" id="permission" class="form-select">
+                            <option value="" selected disabled>Válasszon...</option>
+                            <option value="1" {{$permissions->permission_id == '1' ? 'selected' : ''}}>Adminisztrátor</option>
+                            <option value="2" {{$permissions->permission_id == '2' ? 'selected' : ''}}>Operátor</option>
+                            <option value="3" {{$permissions->permission_id == '3' ? 'selected' : ''}}>Felhasználó</option>
+                        </select>  --}}
+                        {{-- EZ MAJD AZ ADMIN RÉSZBE KELL!!!! --}}
                         <div class="text-center">
                             <button type="submit" class="btn btn-success mt-3">Mentés</button>
-
                         </div>  
                     </div>
                 </div>
@@ -367,5 +375,6 @@
         }
     });
 </script>
+
 
 @endsection

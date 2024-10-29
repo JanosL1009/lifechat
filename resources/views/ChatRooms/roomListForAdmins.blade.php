@@ -1,21 +1,12 @@
 @extends('layouts.app')
 @section('content')
-<style>
-    .lifechatlogo{
-        text-align: center;
-        height: 130px;
-        width: auto;
-    }
-    .roomtitle{
-        text-align: center;
-    }
-</style>
+
 <div class="container">
     <div class="col-md-12">
         <div class="lifechatlogo">
             <img src="{{ asset('images/lifechat.gif') }}" alt="">
         </div>      
-          <div class="row">
+        <div class="row">
             <div class="roomtitle">
                 <h1>Szobák</h1>
             </div>
@@ -48,6 +39,11 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <!-- Pagination Links -->
+            <div class="d-flex justify-content-center">
+                {{ $rooms->links() }}
+            </div>
         </div>
     </div>
 </div>

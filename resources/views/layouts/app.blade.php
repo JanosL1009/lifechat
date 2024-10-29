@@ -93,8 +93,9 @@
                     </div>
                     <div class="header-left">
                         <a href="{{route("felhasznalo.profil")}}" class="ml-15"><i class="fas fa-user"></i> </a>
-                        <a href="#" class="ml-15"> <i class="fas fa-cog"></i></a>
-                       
+                        <a href="#" class="ml-15"><i class="fas fa-cog"></i></a>
+                        <a href="#" class="ml-15"><i class="fa-solid fa-magnifying-glass"></i></a> 
+                        {{-- Itt ez a glass a felhasználó kereső lesz! --}}
                     </div>
                   
                   </div>

@@ -137,7 +137,7 @@ class ChatRoomController extends Controller
     */
     public function adminRoomList()
     {
-        $rooms = Room::paginate(15);
+        $rooms = Room::paginate(10);
 
         return view('ChatRooms.roomListForAdmins')->with('rooms',$rooms);
     }
@@ -147,7 +147,8 @@ class ChatRoomController extends Controller
     */
     public function getRoomList()
     {
-        
+        $rooms = Room::paginate(10);
+        return view('ChatRooms.roomList')->with('rooms',$rooms);
     }
 
 }

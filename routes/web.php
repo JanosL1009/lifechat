@@ -20,6 +20,7 @@ Route::get('/chatek', [App\Http\Controllers\ChatController::class, 'index'])->na
 Route::get('getRooms', [App\Http\Controllers\ApiController::class, 'getRooms'])->name('getRooms');
 Route::post('setRoomMessage', [App\Http\Controllers\ChatRoomController::class, 'setRoomMessage'])->name('setRoomMessage');
 
+Route::get('rooms', [App\Http\Controllers\ChatRoomController::class, 'getRoomList'])->name('get.rooms.list');
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
