@@ -47,4 +47,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    //nem biztos hogy jo
+    public function permission()
+    {
+        return $this->belongsTo(PermissionToUser::class, 'id','user_id');
+    }
 }
