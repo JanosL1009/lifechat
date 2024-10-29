@@ -4,15 +4,17 @@ const socketIo = require('socket.io');
 const cors = require('cors');
 
 const app = express();
-app.use(cors({ origin: '*' })); // Engedélyezés minden eredethez
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+
+app.use(cors(corsOptions)); // Engedélyezés minden eredethez
 
 
 const server = http.createServer(app);
-const io = socketIo(server,{
-    cors: {
-         origin: "http://localhost:3000"
-    }
-});
+const io = socketIo(server);
 
 io.on('connection', (socket) => {
     console.log('Új felhasználó csatlakozott: ' + socket.id);

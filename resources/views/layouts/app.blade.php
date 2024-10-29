@@ -22,6 +22,10 @@
      <!-- Scripts -->
      @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+     <style>
+        .ml-15
+        {    margin-left: 15px;}
+     </style>
 </head>
 <body>
     <aside class="sidebar-nav-wrapper">
@@ -88,8 +92,9 @@
                       </button>
                     </div>
                     <div class="header-left">
-                        <i class="fas fa-user"></i> 
-                        <i class="fas fa-cog"></i>
+                        <a href="{{route("felhasznalo.profil")}}" class="ml-15"><i class="fas fa-user"></i> </a>
+                        <a href="#" class="ml-15"> <i class="fas fa-cog"></i></a>
+                       
                     </div>
                   
                   </div>
