@@ -352,7 +352,7 @@
     </div>
 </div>
 <script>
-;
+
     const cardFooter = document.getElementById("cardFooter");
     const editBtn = document.getElementById("editBtn");
 

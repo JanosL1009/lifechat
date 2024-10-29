@@ -41,7 +41,7 @@
                     <span class="room-name">15+ korosztály</span>
                     <div class="room-count-icons">
                         <span class="room-count">Létszám: <span class="room-number">23</span></span>
-                        <i class="fas fa-info-circle"></i> 
+                        <i class="fas fa-info-circle"  data-bs-toggle="modal" data-bs-target="#exampleModal"></i> 
                         <i class="fas fa-star"></i> 
                     </div>
                 </div>
@@ -141,7 +141,30 @@
 
      
 
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Szoba neve 15+ korosztály</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <p>Létszám: 23</p>
+            <p>Téma: </p>
+          </div>
+          <div>
+            <p>Téma leírása lesz részletes.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
       
       
       <script src="http://localhost/admintemplate/assets/js/main.js"></script>
