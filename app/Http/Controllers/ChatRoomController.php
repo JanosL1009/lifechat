@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\ChatsInTheRoom;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class ChatRoomController extends Controller
@@ -49,8 +50,8 @@ class ChatRoomController extends Controller
      */
     public function NewRoom(Request $request)
     {
-
-    }
+        return view('ChatRooms.createAnNewRoom');
+    }   
 
 
     /**
@@ -61,7 +62,26 @@ class ChatRoomController extends Controller
      */
     public function CreateNewRoom(Request $request)
     {
+        $newroom = new Room();
 
+        $newroom->name = $request->roomname;
+        if ($request->hasFile('roompictures')) {
+            $originalFileName = $request->file('roompictures')->getClientOriginalName();
+            $request->file('roompictures')->move(public_path('roompictures'), $originalFileName);
+            $newroom->picture =  $originalFileName;
+        }
+        $newroom->number_of_employees = $request->nmbofempl;
+        $newroom->describe = $request->describe;
+        $newroom->status = $request->input('status');
+
+        try {
+            if($newroom->save())
+            {
+                return redirect()->route('admin.roomlist')->with('success','A szoba létrehozása sikeresen megtörtént!');
+            }
+        } catch (Exception $error) {
+            return redirect()->route('admin.roomlist')->with('failed','A szoba létrehozása sikertelen!');
+        }
     }
 
     /**
@@ -74,7 +94,9 @@ class ChatRoomController extends Controller
      */
     public function GetUpdateRoom(Request $request,$room_id)
     {
-
+        $room = Room::find($room_id);
+        // dd($room);
+        return view('ChatRooms.updatteAnRoom')->with('room',$room);
     }
 
 
@@ -84,9 +106,29 @@ class ChatRoomController extends Controller
      * 
      * @return redirect back
      */
-    public function UpdateRoom(Request $request)
+    public function UpdateRoom($id, Request $request)
     {
+        $updateroom = Room::find($id);
 
+        $updateroom->name = $request->input('roomname');
+
+        if ($request->hasFile('roompictures')) {
+            $originalFileName = $request->file('roompictures')->getClientOriginalName();
+            $request->file('roompictures')->move(public_path('roompictures'), $originalFileName);
+            $updateroom->picture = $originalFileName;
+        }
+
+        $updateroom->number_of_employees = $request->input('nmbofempl');
+        $updateroom->describe = $request->input('describe');
+        $updateroom->status = $request->input('status');
+
+        try {
+            if ($updateroom->save()) {
+                return redirect()->route('admin.roomlist')->with('success','A szoba módosítása sikeresen megtörtént!');
+            }
+        } catch (Exception $error) {
+            return redirect()->route('admin.roomlist')->with('failed','A szoba módosítása sikertelen!');
+        }
     }
 
 
@@ -95,7 +137,9 @@ class ChatRoomController extends Controller
     */
     public function adminRoomList()
     {
+        $rooms = Room::paginate(15);
 
+        return view('ChatRooms.roomListForAdmins')->with('rooms',$rooms);
     }
 
     /** 
@@ -103,7 +147,7 @@ class ChatRoomController extends Controller
     */
     public function getRoomList()
     {
-
+        
     }
 
 }

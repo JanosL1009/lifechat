@@ -26,7 +26,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('room-list', [App\Http\Controllers\ChatRoomController::class, 'adminRoomList'])->name('roomlist');
 
     Route::get('room/new', [App\Http\Controllers\ChatRoomController::class, 'NewRoom'])->name('NewRoom');
-    Route::post('room/create', [App\Http\Controllers\ChatRoomController::class, 'CreateNewRoom'])->name('CreateNewRoom');
+    Route::post('room/create/post', [App\Http\Controllers\ChatRoomController::class, 'CreateNewRoom'])->name('room.createnew.post');
 
+    
+    Route::get('room/update/{id}', [App\Http\Controllers\ChatRoomController::class, 'GetUpdateRoom'])->name('update.room');
+    Route::post('room/update/{id}', [App\Http\Controllers\ChatRoomController::class, 'UpdateRoom'])->name('update.room.post');
 
 });
