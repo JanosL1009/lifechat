@@ -10,3 +10,4 @@ const socket = io('http://localhost:3000');
 socket.on('chat message', (msg) => {
     console.log('Új üzenet:', msg);
 });
+
