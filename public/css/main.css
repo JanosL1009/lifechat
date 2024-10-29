@@ -5957,3 +5957,16 @@ h6,
 }
 
 .lighter-blue{ background-color: #4C89CD;}
+.birthdate-options {
+  display: flex;
+  justify-content: space-between; /* Egyenletesen oszd el a helyet */
+  margin-top: 5px; /* Optional: Add spacing above the birthdate options */
+}
+
+.birthdate-options select {
+  width: 100px; /* Méret a legördülő menüknek */
+  padding: 8px; /* Belső térköz */
+  margin-right: 10px; /* Térköz a legördülő menük között */
+  border-radius: 4px; /* Lekerekített sarkok */
+  border: 1px solid #ccc; /* Határ */
+}

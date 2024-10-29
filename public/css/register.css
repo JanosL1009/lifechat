@@ -12,9 +12,9 @@ body {
     margin-bottom: 10px;
 }
 .logo img {
-    width: 300px; /* Asztali nézetben nagyobb méret */
-    height: auto; /* Arányosan méretezés */
-    max-width: 100%; /* Szélesség korlátozása a szülőelemhez */
+    width: 300px;
+    height: auto;
+    max-width: 100%;
 }
 .form-container {
     background-color: #b4d4e7;
@@ -59,7 +59,6 @@ input[type="text"], input[type="email"], input[type="password"] {
 .link:hover {
     text-decoration: underline;
 }
-
 @media (max-width: 600px) {
     .logo img {
         width: 250px; 
@@ -80,3 +79,40 @@ input[type="text"], input[type="email"], input[type="password"] {
         font-size: 1em;
     }
 }
+.gender-options {
+    display: flex;
+    align-items: center;
+    margin-top: 5px; 
+}
+
+.gender-options div {
+    margin-right: 20px; 
+    display: flex;
+    align-items: center; 
+}
+
+.gender-options input[type="radio"] {
+    margin-right: 5px;
+}
+.birthdate-options {
+    display: flex;
+    justify-content: space-between; /* Egyenletesen oszd el a helyet */
+    margin-top: 5px; /* Optional: Add spacing above the birthdate options */
+}
+
+.birthdate-options select {
+    width: 100px; /* Méret a legördülő menüknek */
+    padding: 8px; /* Belső térköz */
+    margin-right: 10px; /* Térköz a legördülő menük között */
+    border-radius: 4px; /* Lekerekített sarkok */
+    border: 1px solid #ccc; /* Határ */
+}
+.checkbox {
+    display: flex;
+    align-items: center; /* Középre igazítás */
+    margin-top: 15px; /* Térköz a checkbox fölött */
+}
+.checkbox input[type="checkbox"] {
+    margin-right: 10px; /* Térköz a checkbox és a címke között */
+}
+
