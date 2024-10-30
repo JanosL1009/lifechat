@@ -400,8 +400,8 @@
             <p>Téma leírása lesz részletes.</p>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Bezárás</button>
           
         </div>
       </div>
