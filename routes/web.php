@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SearchUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,5 +33,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     
     Route::get('room/update/{id}', [App\Http\Controllers\ChatRoomController::class, 'GetUpdateRoom'])->name('update.room');
     Route::post('room/update/{id}', [App\Http\Controllers\ChatRoomController::class, 'UpdateRoom'])->name('update.room.post');
+
+    Route::get('szemely_kereses',[App\Http\Controllers\SearchUserController::class, 'search'])->name('szemely.kereses')->middleware('auth');
 
 });
