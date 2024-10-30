@@ -37,19 +37,24 @@ class ProfileController extends Controller
         $szuletesiido = $user->birthdate ?? "Ismeretlen";
         $jogosultsag = $this->GetPermission();
 
+        $defaultImage = asset('img/avatar-3.jpg');
+
+        $profileImage = $user->profilepicture ? asset('storage/profilepictures/' . $user->profilepicture) : $defaultImage;
 
         return view('profil.index')->with('user',$user)->with('sex',$sex)->with('age',$age)->with('height',$height)
        ->with('weight',$weight)->with('haircolor',$haircolor)->with('eyecolor',$eyecolor)->with('work',$work)
        ->with('pet',$pet)->with('maritalstatus',$maritalstatus)->with('vip',$vip)->with('lastlogin',$lastlogin)
        ->with('registered',$registered)->with('szuletesiido',$szuletesiido)
-       ->with('permissions',$permissions)->with('jogosultsag',$jogosultsag);
+       ->with('permissions',$permissions)->with('jogosultsag',$jogosultsag)
+       ->with('profileImage',$profileImage);
     }
 
     public function EditProfile(Request $request, $id)
     {
     
         $user = User::findOrFail($id);
-        // dd($user);
+
+       
         $user->username = $request->input('username');
         $user->email = $request->input('email');
         $user->sex = $request->input('sex');
@@ -61,7 +66,12 @@ class ProfileController extends Controller
         $user->eyeColor = $request->input('eyecolor'); 
         $user->work = $request->input('work');
         $user->pet = $request->input('pet');
-        
+
+        if ($request->hasFile('profilepicture')) {
+            $originalFileName = $request->file('profilepicture')->getClientOriginalName();
+            $request->file('profilepicture')->move(public_path('profilepicture'), $originalFileName);
+            $user->profilepicture = $originalFileName;
+        }
         try {
             if($user->save())
             {

@@ -239,7 +239,10 @@
         font-size: 16px;
         border-bottom: 1px solid #555;
     }
- 
+    .userimg{
+        width: 300px;
+        height: 300px;
+    }
 </style>
 <div class="container">
     <div class="card">
@@ -251,8 +254,11 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-4 text-center">
-                    <img src="{{ asset('img/avatar-3.jpg') }}" alt="User Image" id="userimg" class="img-fluid">
-                </div>
+                    @if(isset($user) && $user->profilepicture)
+                    <img src="{{ asset('profilepicture/' . $user->profilepicture) }}" alt="Profile Picture" class="userimg">
+                @else
+                    <img src="{{ asset('img/avatar-3.jpg') }}" alt="Profile Picture" class="userimg">
+                @endif                </div>
                 <div class="col-md-4">
                     <h6>Felhasználónév: {{$user->username}}</h6>
                     <h6>Nem: {{$sex}}</h6>
@@ -279,7 +285,7 @@
             </div>
         </div>
         <div class="card-footer" id="cardFooter" style="display: none;">
-            <form action="{{route('felhasznalo.profil.modositas', $user->id)}}" method="POST"> 
+            <form action="{{route('felhasznalo.profil.modositas', $user->id)}}" method="POST" enctype="multipart/form-data"> 
                 @csrf 
                 <div class="row">
                     <div class="col-md-4">
@@ -342,6 +348,8 @@
                         <label for="pet">Háziállat:</label>
                         <input type="text" name="pet" id="pet" class="form-control" value="{{$user->pet}}">
 
+                        <label for="profpic">Profilkép</label>
+                        <input type="file" id="profilepicture" name="profilepicture" class="form-control">
                         {{-- <label for="permission">Felhasználó szint:</label>
                         <select name="permission" id="permission" class="form-select">
                             <option value="" selected disabled>Válasszon...</option>
