@@ -363,7 +363,7 @@
               </div>
 
               <div class="row lighter-blue">
-                <p>Aktív szoba felirat</p>
+                <p id="roomName">Szoba neve</p>
               </div>
             </div>
           </header>

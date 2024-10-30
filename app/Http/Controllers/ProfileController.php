@@ -147,4 +147,49 @@ class ProfileController extends Controller
 
         return null; 
     }
+
+
+
+    public function userView(Request $request, $userid)
+    {
+        $user = User::find($userid);
+
+        if(is_null($user)) 
+        {
+            abort(404);
+        }
+
+        $userid = $user->id;
+
+        $permissions = DB::table('permission_to_users')
+        ->where('user_id',$userid)
+        ->first();
+        $maritalStatuses = MaritalStatus::all(); 
+        $maritalstatus = $user->marital_status_id ? MaritalStatus::find($user->id) : null;
+
+        $sex = $this->GetSex();
+        $age = $this->GetCurrentAge();
+        $height = $user->height ?? "Nincs kitöltve";
+        $weight = $user->weight ?? "Nincs kitöltve";
+        $haircolor = $user->hairColor ?? "Nincs kitöltve";
+        $eyecolor = $user->eyeColor ?? "Nincs kitöltve";
+        $work = $user->work ?? "Nincs kitöltve";
+        $pet = $user->pet ?? "Nincs kitöltve";
+        $vip = $this->GetVip();
+        $lastlogin = $user->lastlogin ?? "Ismeretlen";
+        $registered = $user->created_at ?? "Ismeretlen";
+        $szuletesiido = $user->birthdate ?? "Ismeretlen";
+        $jogosultsag = $this->GetPermission();
+
+        $defaultImage = asset('img/avatar-3.jpg');
+
+        $profileImage = $user->profilepicture ? asset('storage/profilepictures/' . $user->profilepicture) : $defaultImage;
+
+        return view('profil.userViewer')->with('user',$user)->with('sex',$sex)->with('age',$age)->with('height',$height)
+       ->with('weight',$weight)->with('haircolor',$haircolor)->with('eyecolor',$eyecolor)->with('work',$work)
+       ->with('pet',$pet)->with('maritalstatus',$maritalstatus)->with('vip',$vip)->with('lastlogin',$lastlogin)
+       ->with('registered',$registered)->with('szuletesiido',$szuletesiido)
+       ->with('permissions',$permissions)->with('jogosultsag',$jogosultsag)
+       ->with('profileImage',$profileImage)->with('maritalStatuses',$maritalStatuses);
+    }
 }
