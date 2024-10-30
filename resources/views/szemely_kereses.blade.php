@@ -27,7 +27,9 @@
                         <td>
                             <img src="{{ asset($user->profilepicture ? 'profilepicture/' . $user->profilepicture : 'profilepicture/default.jpg') }}" alt="Profile Picture" style="width: 50px; height: 50px;">
                         </td>
-                        <td>Szerkesztés</td>
+                        <td>
+                          <a href="{{ route('admin.szemely.szerkesztes', $user->id) }}" class="btn btn-sm btn-secondary">Szerkesztés</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
