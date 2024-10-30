@@ -388,16 +388,16 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Szoba neve 15+ korosztály</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Szoba neve</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div>
-            <p>Létszám: <span id="r_numberofuseres">0</span></p>
+            <p>Létszám: <span id="r_numberofusers">0</span></p>
             <p >Téma: </p>
           </div>
           <div>
-            <p id="room-theme-describe">Téma leírása lesz részletes.</p>
+            <p id="room-theme-describe"></p>
           </div>
         </div>
         <div class="modal-footer justify-content-center">
@@ -464,7 +464,9 @@
             })
             .then(response => response.json())
             .then(data => {
-                
+                document.getElementById('r_numberofusers').innerHTML = data.number_of_employees;
+                document.getElementById('exampleModalLabel').innerHTML = data.name;
+                document.getElementById('room-theme-describe').innerHTML = data.describe;
                 
                
             })
