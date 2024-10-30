@@ -66,39 +66,7 @@
 
 
 <script>
-    var room_id = 1;
-document.addEventListener("DOMContentLoaded", function() {
-    // Lekérdezi az adatokat a getRooms végpontról
-    fetch('{{route('getRooms')}}')
-        .then(response => response.json())
-        .then(data => {
-            // Szoba lista hozzáadása a DOM-hoz
-            const sidebarNav = document.querySelector('.sidebar-nav');
 
-            data.forEach(room => {
-                // Új szoba HTML szerkezete
-                const roomDiv = document.createElement('div');
-                roomDiv.id = `room-${room.id}`;
-                roomDiv.classList.add('room', 'lighter-blue');
-
-                roomDiv.innerHTML = `
-                    <img src="/images/${room.picture}" alt="Room Icon" class="room-icon">
-                    <div class="room-details">
-                        <span class="room-name">${room.name}</span>
-                        <div class="room-count-icons">
-                            <span class="room-count">Létszám: <span class="room-number">${room.number_of_employees}</span></span>
-                            <i class="fas fa-info-circle"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                `;
-
-                // Szoba hozzáadása a sidebarNav konténerhez
-                sidebarNav.appendChild(roomDiv);
-            });
-        })
-        .catch(error => console.error('Error:', error));
-});
 
 
 document.getElementById('msgSendBtn').addEventListener('click', function() {
