@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MaritalStatus;
 use App\Models\Permission;
 use App\Models\PermissionToUser;
 use App\Models\User;
@@ -21,6 +22,8 @@ class ProfileController extends Controller
         $permissions = DB::table('permission_to_users')
         ->where('user_id',$userid)
         ->first();
+        $maritalStatuses = MaritalStatus::all(); 
+        $maritalstatus = $user->marital_status_id ? MaritalStatus::find($user->id) : null;
 
         $sex = $this->GetSex();
         $age = $this->GetCurrentAge();
@@ -30,7 +33,6 @@ class ProfileController extends Controller
         $eyecolor = $user->eyeColor ?? "Nincs kitöltve";
         $work = $user->work ?? "Nincs kitöltve";
         $pet = $user->pet ?? "Nincs kitöltve";
-        $maritalstatus = $this->GetMaritalStatus();
         $vip = $this->GetVip();
         $lastlogin = $user->lastlogin ?? "Ismeretlen";
         $registered = $user->created_at ?? "Ismeretlen";
@@ -46,7 +48,7 @@ class ProfileController extends Controller
        ->with('pet',$pet)->with('maritalstatus',$maritalstatus)->with('vip',$vip)->with('lastlogin',$lastlogin)
        ->with('registered',$registered)->with('szuletesiido',$szuletesiido)
        ->with('permissions',$permissions)->with('jogosultsag',$jogosultsag)
-       ->with('profileImage',$profileImage);
+       ->with('profileImage',$profileImage)->with('maritalStatuses',$maritalStatuses);
     }
 
     public function EditProfile(Request $request, $id)
@@ -82,38 +84,6 @@ class ProfileController extends Controller
         }
     }
 
-    // public function EditProfileAdmin(Request $request, $id)
-    // {
-    
-    //     $user = User::findOrFail($id);
-    //     // dd($user);
-        
-    //     $user->username = $request->input('username');
-    //     $user->email = $request->input('email');
-    //     $user->sex = $request->input('sex');
-    //     $user->birthdate = $request->input('birthdate');
-    //     $user->marital_status_id = $request->input('marital_status');
-    //     $user->height = $request->input('height');
-    //     $user->weight = $request->input('weight');
-    //     $user->hairColor = $request->input('haircolor'); 
-    //     $user->eyeColor = $request->input('eyecolor'); 
-    //     $user->work = $request->input('work');
-    //     $user->pet = $request->input('pet');
-        
-    //     $permissions = PermissionToUser::find($id);
-    //     $permissions->permission_id = $request->input('permission');
-
-    //     try {
-    //         if($user->save() && $permissions->save())
-    //         {
-    //             return redirect()->route('user.profile', $id)->with('success', 'Profil sikeresen frissítve.');
-    //         }
-    //     } catch (Exception $error) {
-    //         return redirect()->back()->with('error', 'Hiba történt a profil mentésekor.');
-    //     }
-    // }
-    
-
     public function GetPermission()
     {
         $userid = Auth::user()->id; 
@@ -145,25 +115,6 @@ class ProfileController extends Controller
                 return 'Nem';
             default:
                 return 'Nem';
-        }
-    }
-
-    public function GetMaritalStatus()
-    {
-        $user = Auth::user();
-
-        switch($user->marital_status_id)
-        {
-            case 1:
-                return 'Egyedülálló';
-            case 2: 
-                return 'Házas';
-            case 3: 
-                return 'Elvált';
-            case 4: 
-                return 'Özvegy';
-            default:
-            return 'Ismeretlen';
         }
     }
 

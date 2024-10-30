@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MaritalStatus;
 use App\Models\PermissionToUser;
 use App\Models\User;
 use Exception;
@@ -34,6 +35,10 @@ class SearchUserController extends Controller
             ->where('user_id', $id)
             ->first();
 
+
+        $maritalStatuses = MaritalStatus::all(); 
+        $maritalstatus = $user->marital_status_id ? MaritalStatus::find($user->marital_status_id) : null;
+
         $sex = $this->GetSex($user);
         $age = $this->GetCurrentAge($user);
         $height = $user->height ?? "Nincs kitöltve";
@@ -42,7 +47,6 @@ class SearchUserController extends Controller
         $eyecolor = $user->eyeColor ?? "Nincs kitöltve";
         $work = $user->work ?? "Nincs kitöltve";
         $pet = $user->pet ?? "Nincs kitöltve";
-        $maritalstatus = $this->GetMaritalStatus($user);
         $vip = $this->GetVip($user);
         $lastlogin = $user->lastlogin ?? "Ismeretlen";
         $registered = $user->created_at ?? "Ismeretlen";
@@ -55,7 +59,7 @@ class SearchUserController extends Controller
        ->with('pet',$pet)->with('maritalstatus',$maritalstatus)->with('vip',$vip)->with('lastlogin',$lastlogin)
        ->with('registered',$registered)->with('szuletesiido',$szuletesiido)
        ->with('permissions',$permissions)->with('jogosultsag',$jogosultsag)
-       ->with('user',$user);
+       ->with('user',$user)->with('maritalStatuses',$maritalStatuses);
     }
 
     public function EditProfile_Post(Request $request, $id)
@@ -75,6 +79,7 @@ class SearchUserController extends Controller
         $user->eyeColor = $request->input('eyecolor'); 
         $user->work = $request->input('work');
         $user->pet = $request->input('pet');
+        $user->is_vip = $request->input('vip');
 
         if ($request->hasFile('profilepicture')) {
             $originalFileName = $request->file('profilepicture')->getClientOriginalName();
@@ -120,25 +125,9 @@ class SearchUserController extends Controller
 
     public function GetVip(User $user)
     {
-        return $user->is_vip ? 'Igen' : 'Nem';
+        return $user->is_vip == 1 ? 'Igen' : 'Nem';
     }
-
-    public function GetMaritalStatus(User $user)
-    {
-        switch ($user->marital_status_id) {
-            case 1:
-                return 'Egyedülálló';
-            case 2:
-                return 'Házas';
-            case 3:
-                return 'Elvált';
-            case 4:
-                return 'Özvegy';
-            default:
-                return 'Ismeretlen';
-        }
-    }
-
+    
     public function GetSex(User $user)
     {
         switch ($user->sex) {
