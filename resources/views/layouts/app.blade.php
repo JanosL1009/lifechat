@@ -393,11 +393,11 @@
         </div>
         <div class="modal-body">
           <div>
-            <p>Létszám: 23</p>
-            <p>Téma: </p>
+            <p>Létszám: <span id="r_numberofuseres">0</span></p>
+            <p >Téma: </p>
           </div>
           <div>
-            <p>Téma leírása lesz részletes.</p>
+            <p id="room-theme-describe">Téma leírása lesz részletes.</p>
           </div>
         </div>
         <div class="modal-footer justify-content-center">
@@ -411,6 +411,8 @@
       
       <script src="http://localhost/admintemplate/assets/js/main.js"></script>
       <script>
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
         var room_id = 1;
     document.addEventListener("DOMContentLoaded", function() {
         // Lekérdezi az adatokat a getRooms végpontról
@@ -432,7 +434,7 @@
                             <span class="room-name">${room.name}</span>
                             <div class="room-count-icons">
                                 <span class="room-count">Létszám: <span class="room-number">${room.number_of_employees}</span></span>
-                                <i class="fas fa-info-circle"></i>
+                                <i class="fas fa-info-circle" data-bs-toggle="modal" data-bs-target="#exampleModal" data-roomid="${room.id}" onclick="getRoomData(${room.id})"></i>
                                 <i class="fas fa-star"></i>
                             </div>
                         </div>
@@ -444,6 +446,30 @@
             })
             .catch(error => console.error('Error:', error));
     });
+
+    function getRoomData(room_id)
+    {
+      
+      fetch('{{route('getRoomData')}}',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                },
+                // Az üzenet küldése paraméterekben
+                body: JSON.stringify({
+                    room_id: room_id
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                
+                
+               
+            })
+            .catch(error => console.error('Error:', error));
+    }
     </script>
 </body>
 </html>
