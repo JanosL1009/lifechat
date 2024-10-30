@@ -274,7 +274,7 @@
                         <h4>Részletes adatok</h4>
                         <button class="btn btn-primary" id="editBtn">Szerkesztés</button>
                     </div>
-                    <h6>Házassági állapot: {{$maritalstatus}}</h6>
+                    <h6>Házassági állapot: {{ $maritalstatus ? $maritalstatus->name : 'Nincs megadva' }}</h6>
                     <h6>Magasság: {{$height}} cm</h6>
                     <h6>Súly: {{$weight}} kg</h6>
                     <h6>Hajszín: {{$haircolor}}</h6>
@@ -307,16 +307,24 @@
                         <input type="date" name="birthdate" id="birthdate" class="form-control" 
                         min="1930-01-01" max="2020-12-31" 
                         value="{{ $user->birthdate }}">
-                  
+                        
+                        <label for="permission">Felhasználó szint:</label>
+                        <select name="permission" id="permission" class="form-select">
+                            <option value="" selected disabled>Válasszon...</option>
+                            <option value="1" {{$permissions->permission_id ?? null == '1' ? 'selected' : ''}}>Adminisztrátor</option>
+                            <option value="2" {{$permissions->permission_id ?? null == '2' ? 'selected' : ''}}>Operátor</option>
+                            <option value="3" {{$permissions->permission_id ?? null == '3' ? 'selected' : ''}}>Felhasználó</option>
+                        </select> 
                     </div>
                     <div class="col-md-4">
                         <label for="marital_status">Házassági állapot:</label>
                         <select name="marital_status" id="marital_status" class="form-select">
                             <option value="" selected disabled>Válasszon...</option>
-                            <option value="1" {{$user->marital_status_id == '1' ? 'selected' : ''}}>Egyedülálló</option>
-                            <option value="2" {{$user->marital_status_id == '2' ? 'selected' : ''}}>Házas</option>
-                            <option value="3" {{$user->marital_status_id == '3' ? 'selected' : ''}}>Elvált</option>
-                            <option value="4" {{$user->marital_status_id == '4' ? 'selected' : ''}}>Özvegy</option>
+                            @foreach ($maritalStatuses as $status)
+                                <option value="{{ $status->id }}" {{ $user->marital_status_id == $status->id ? 'selected' : '' }}>
+                                    {{ $status->name }} 
+                                </option>
+                            @endforeach
                         </select>
 
                         <label for="height">Magasság:</label>
@@ -336,6 +344,13 @@
                         </div>
                         <label for="haircolor">Hajszín:</label>
                         <input type="text" name="haircolor" id="haircolor" class="form-control" value="{{$user->hairColor}}">
+                        
+                        <label for="vip">VIP?</label>
+                        <select name="vip" id="vip" class="form-select">
+                            <option value="" selected disabled>Válasszon...</option>
+                            <option value="1" {{ $user->is_vip  == 1 ? 'selected' : '' }}>Igen</option>
+                            <option value="2" {{ $user->is_vip  == 2 ? 'selected' : '' }}>Nem</option>
+                        </select>                        
                     </div>
 
                     <div class="col-md-4">
@@ -350,14 +365,7 @@
 
                         <label for="profpic">Profilkép</label>
                         <input type="file" id="profilepicture" name="profilepicture" class="form-control">
-                        <label for="permission">Felhasználó szint:</label>
-                        <select name="permission" id="permission" class="form-select">
-                            <option value="" selected disabled>Válasszon...</option>
-                            <option value="1" {{$permissions->permission_id ?? null == '1' ? 'selected' : ''}}>Adminisztrátor</option>
-                            <option value="2" {{$permissions->permission_id ?? null == '2' ? 'selected' : ''}}>Operátor</option>
-                            <option value="3" {{$permissions->permission_id ?? null == '3' ? 'selected' : ''}}>Felhasználó</option>
-                        </select> 
-                        {{-- EZ MAJD AZ ADMIN RÉSZBE KELL!!!! --}}
+                        
                         <div class="text-center">
                             <button type="submit" class="btn btn-success mt-3">Mentés</button>
                         </div>  

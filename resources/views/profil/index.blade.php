@@ -274,7 +274,7 @@
                         <h4>Részletes adatok</h4>
                         <button class="btn btn-primary" id="editBtn">Szerkesztés</button>
                     </div>
-                    <h6>Házassági állapot: {{$maritalstatus}}</h6>
+                    <h6>Házassági állapot: {{$maritalstatus->name}}</h6>
                     <h6>Magasság: {{$height}} cm</h6>
                     <h6>Súly: {{$weight}} kg</h6>
                     <h6>Hajszín: {{$haircolor}}</h6>
@@ -313,10 +313,11 @@
                         <label for="marital_status">Házassági állapot:</label>
                         <select name="marital_status" id="marital_status" class="form-select">
                             <option value="" selected disabled>Válasszon...</option>
-                            <option value="1" {{$user->marital_status_id == '1' ? 'selected' : ''}}>Egyedülálló</option>
-                            <option value="2" {{$user->marital_status_id == '2' ? 'selected' : ''}}>Házas</option>
-                            <option value="3" {{$user->marital_status_id == '3' ? 'selected' : ''}}>Elvált</option>
-                            <option value="4" {{$user->marital_status_id == '4' ? 'selected' : ''}}>Özvegy</option>
+                            @foreach ($maritalStatuses as $status)
+                                <option value="{{ $status->id }}" {{ $user->marital_status_id == $status->id ? 'selected' : '' }}>
+                                    {{ $status->name }} 
+                                </option>
+                            @endforeach
                         </select>
 
                         <label for="height">Magasság:</label>
