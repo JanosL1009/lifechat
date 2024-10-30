@@ -42,4 +42,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('szemely/szerkesztes/{id}', [App\Http\Controllers\SearchUserController::class, 'edit'])->name('szemely.szerkesztes');
     Route::post('szemely/szerkesztes/{id}/post', [App\Http\Controllers\SearchUserController::class, 'EditProfile_Post'])->name('szemely.szerkesztes.post');
 
+    Route::get('tags', [App\Http\Controllers\TagController::class, 'index'])->name('tags.list');
+    Route::get('tags-create', [App\Http\Controllers\TagController::class, 'create'])->name('tags.create');
+    Route::post('tags-create/post', [App\Http\Controllers\TagController::class, 'create_post'])->name('tags.create.post');
+    Route::get('tags-edit/{id}', [App\Http\Controllers\TagController::class, 'Edit'])->name('tags.edit');
+    Route::post('tags-edit/post', [App\Http\Controllers\TagController::class, 'Edit_Post'])->name('tags.edit.post');
+
 });

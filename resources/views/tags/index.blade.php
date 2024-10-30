@@ -8,7 +8,7 @@
         </div>      
         <div class="row">
             <div class="roomtitle">
-                <h1>Szobák</h1>
+                <h1>Címkék</h1>
             </div>
             @if(session('success'))
                 <div class="alert alert-success" role="alert">
@@ -20,28 +20,30 @@
                     {{ session('failed') }}
                 </div>
             @endif
-            <table class="table table-striped">
+            <table class="table table-striped text-center">
                 <thead>
-                    <th>Szoba neve</th>
-                    <th>Szoba leírása</th>
-                    <th>Státusz</th>
-                    <th>Létszám</th>
+                    <tr>
+                        <th>Címke neve</th>
+                        <th>Címke színe</th>
+                        <th>Műveletek</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    @foreach($rooms as $room)
+                    @foreach($tags as $tag)
                     <tr>
-                        <td>{{ $room->name }}</td>
-                        <td>{{ $room->describe }}</td>
-                        <td>{{ $room->status == 1 ? 'Aktív' : 'Inaktív' }}</td>
-                        <td>{{ $room->number_of_employees }}</td>                    
+                        <td>{{ $tag->name }}</td>
+                        <td>
+                            <div style="width: 20px; height: 20px; background-color: {{ $tag->color }}; border: 1px solid #000; margin: 0 auto;"></div> <!-- Középre igazítva -->
+                        </td>
+                       <td>
+                        <a href="{{ route('admin.tags.edit', $tag->id) }}" class="btn btn-warning">Szerkesztés</a>
+                       </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
-
-            <!-- Pagination Links -->
             <div class="d-flex justify-content-center">
-                {{ $rooms->links() }}
+                {{ $tags->links() }}
             </div>
         </div>
     </div>

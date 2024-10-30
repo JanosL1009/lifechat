@@ -335,8 +335,9 @@
                         <a href="{{route("felhasznalo.profil")}}" class="ml-15"><i class="fas fa-user"></i> </a>
                         <a href="#" class="ml-15"><i class="fas fa-cog"></i></a>
                         <a href="{{route('admin.szemely.kereses')}}" class="ml-15"><i class="fa-solid fa-magnifying-glass"></i></a> 
-                        
                         <a href="{{route('admin.roomlist')}}" class="ml-15"><i class="fa fa-building" aria-hidden="true"></i></a> 
+                        <a href="{{route('admin.tags.list')}}" class="ml-15"><i class="fa-solid fa-tag"></i></a>
+
                     </div>
                   
                   </div>
