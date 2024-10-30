@@ -7,8 +7,11 @@
             <img src="{{ asset('images/lifechat.gif') }}" alt="">
         </div>      
         <div class="row">
-            <div class="roomtitle">
-                <h1>Szobák</h1>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 style="text-align:center;">Szobák</h1> 
+                <div>
+                    <a href="{{ route('admin.NewRoom') }}" class="btn btn-primary">Létrehozás</a> <!-- Gomb a jobb oldalon -->
+                </div>
             </div>
             @if(session('success'))
                 <div class="alert alert-success" role="alert">
@@ -34,13 +37,12 @@
                             <a href="{{ route('admin.update.room', ['id' => $room->id]) }}" class="text-primary" title="Szoba módosítása">
                                 <i class="fa fa-pencil"></i>
                             </a>
+                            
                         </td>                    
                     </tr>
                     @endforeach
                 </tbody>
             </table>
-
-            <!-- Pagination Links -->
             <div class="d-flex justify-content-center">
                 {{ $rooms->links() }}
             </div>

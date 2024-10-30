@@ -365,6 +365,24 @@
 
                         <label for="profpic">Profilkép</label>
                         <input type="file" id="profilepicture" name="profilepicture" class="form-control">
+
+                        <label for="tagname">Címke:</label>
+                        
+                        <label for="tagname">Címke:</label>
+                        <select name="tag_id" id="tag_id" class="form-select" onchange="updateTagColor()">
+                            <option value="" selected disabled>Válasszon...</option>
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->id }}" data-color="{{ $tag->color }}"
+                                    {{ $selectedTagId == $tag->id ? 'selected' : '' }}>
+                                    {{ $tag->name }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <div id="tag_color_display" style="margin-top: 10px;">
+                            <span id="selected_tag_name">Címke színe: </span>
+                            <span id="selected_tag_color" style="display:inline-block; width: 20px; height: 20px; border: 1px solid #000;"></span>
+                        </div>
                         
                         <div class="text-center">
                             <button type="submit" class="btn btn-success mt-3">Mentés</button>
@@ -376,21 +394,26 @@
     </div>
 </div>
 <script>
-
     const cardFooter = document.getElementById("cardFooter");
     const editBtn = document.getElementById("editBtn");
 
-   
-
     editBtn.addEventListener('click', () => {
-        // Toggle the visibility of the card-footer
-        if (cardFooter.style.display === "none") {
-            cardFooter.style.display = "block";
-        } else {
-            cardFooter.style.display = "none";
-        }
+        cardFooter.style.display = cardFooter.style.display === "none" ? "block" : "none";
+    });
+
+    function updateTagColor() {
+        const selectElement = document.getElementById('tag_id');
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const color = selectedOption.getAttribute('data-color');
+        const name = selectedOption.text;
+
+        document.getElementById('selected_tag_color').style.backgroundColor = color;
+        document.getElementById('selected_tag_name').innerText = name;
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        updateTagColor();
     });
 </script>
-
 
 @endsection

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\MaritalStatus;
 use App\Models\PermissionToUser;
+use App\Models\Tag;
+use App\Models\TagToUser;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -39,6 +41,12 @@ class SearchUserController extends Controller
         $maritalStatuses = MaritalStatus::all(); 
         $maritalstatus = $user->marital_status_id ? MaritalStatus::find($user->marital_status_id) : null;
 
+        $tags = Tag::all();
+
+        $tagToUser = DB::table('tag_to_users')->where('user_id', $id)->first();
+        $selectedTagId = $tagToUser ? $tagToUser->tag_id : null; 
+
+
         $sex = $this->GetSex($user);
         $age = $this->GetCurrentAge($user);
         $height = $user->height ?? "Nincs kitöltve";
@@ -59,7 +67,8 @@ class SearchUserController extends Controller
        ->with('pet',$pet)->with('maritalstatus',$maritalstatus)->with('vip',$vip)->with('lastlogin',$lastlogin)
        ->with('registered',$registered)->with('szuletesiido',$szuletesiido)
        ->with('permissions',$permissions)->with('jogosultsag',$jogosultsag)
-       ->with('user',$user)->with('maritalStatuses',$maritalStatuses);
+       ->with('user',$user)->with('maritalStatuses',$maritalStatuses)
+       ->with('selectedTagId',$selectedTagId)->with('tags',$tags);
     }
 
     public function EditProfile_Post(Request $request, $id)
@@ -95,8 +104,17 @@ class SearchUserController extends Controller
 
         $permissions->permission_id = $request->input('permission');
 
+        $tagToUser = TagToUser::where('user_id', $id)->first();
+        if (!$tagToUser) {
+            $tagToUser = new TagToUser();
+            $tagToUser->user_id = $id; 
+        }
+    
+        $tagToUser->tag_id = $request->input('tag_id');
+        $tagToUser->id = $id;
+
         try {
-            if($user->save() && $permissions->save())
+            if($user->save() && $permissions->save() && $tagToUser->save() )
             {
                 return redirect()->route('user.profile', $id)->with('success', 'Profil sikeresen frissítve.');
             }

@@ -7,8 +7,11 @@
             <img src="{{ asset('images/lifechat.gif') }}" alt="">
         </div>      
         <div class="row">
-            <div class="roomtitle">
-                <h1>Címkék</h1>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 style="text-align:center;">Címkék</h1> 
+                <div>
+                    <a href="{{ route('admin.tags.create') }}" class="btn btn-primary">Létrehozás</a> <!-- Gomb a jobb oldalon -->
+                </div>
             </div>
             @if(session('success'))
                 <div class="alert alert-success" role="alert">
@@ -35,9 +38,9 @@
                         <td>
                             <div style="width: 20px; height: 20px; background-color: {{ $tag->color }}; border: 1px solid #000; margin: 0 auto;"></div> <!-- Középre igazítva -->
                         </td>
-                       <td>
-                        <a href="{{ route('admin.tags.edit', $tag->id) }}" class="btn btn-warning">Szerkesztés</a>
-                       </td>
+                        <td>
+                            <a href="{{ route('admin.tags.edit', $tag->id) }}" class="btn btn-warning">Szerkesztés</a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
