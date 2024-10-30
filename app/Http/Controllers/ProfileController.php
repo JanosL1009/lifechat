@@ -119,9 +119,9 @@ class ProfileController extends Controller
         $userid = Auth::user()->id; 
 
         $permissions = DB::table('permission_to_users')
-        ->where('user_id',$userid)
+        ->where('user_id',$userid )
         ->first();
-        switch ($permissions->permission_id) {
+        switch ($permissions->permission_id ?? null) {
             case 1:
                 return 'Adminisztrátor';
             case 2:
