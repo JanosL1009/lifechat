@@ -11,6 +11,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/aszf', [App\Http\Controllers\PageController::class, 'ASZF'])->name('aszf');
+Route::get('/privacy-policy', [App\Http\Controllers\PageController::class, 'PrivPolicy'])->name('privacy.policy');
+
 Route::get('/profil', [App\Http\Controllers\ProfileController::class, 'index'])->name('felhasznalo.profil')->middleware('auth');
 Route::post('/profil-modositas/{id}/post', [App\Http\Controllers\ProfileController::class, 'EditProfile'])->name('felhasznalo.profil.modositas')->middleware('auth');
 
@@ -47,5 +50,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('tags-create/post', [App\Http\Controllers\TagController::class, 'create_post'])->name('tags.create.post');
     Route::get('tags-edit/{id}', [App\Http\Controllers\TagController::class, 'Edit'])->name('tags.edit');
     Route::post('tags-edit/post', [App\Http\Controllers\TagController::class, 'Edit_Post'])->name('tags.edit.post');
+
+    Route::get('pages', [App\Http\Controllers\PageController::class, 'Index'])->name('pages.index');
+    Route::get('pages-edit/{id}', [App\Http\Controllers\PageController::class, 'Edit_Pages'])->name('pages.edit');
+    Route::post('pages-edit/{id}/post', [App\Http\Controllers\PageController::class, 'Edit_Pages_Post'])->name('pages.edit.post');
 
 });
