@@ -92,6 +92,12 @@
                                                 <input type="file" id="roompictures" name="roompictures" class="form-control">
                                             </div>
                                         </div>
+                                        <div class="col-md-6 d-flex flex-column align-items-center">
+                                            <div class="mt-3">
+                                                <label for="chatImage" class="form-label">Chat háttérkép feltöltése</label>
+                                                <input type="file" id="chatpictures" name="chatpictures" class="form-control">
+                                            </div>
+                                        </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="roomname">Szoba neve</label>

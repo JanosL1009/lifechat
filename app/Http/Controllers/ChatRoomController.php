@@ -70,6 +70,13 @@ class ChatRoomController extends Controller
             $request->file('roompictures')->move(public_path('roompictures'), $originalFileName);
             $newroom->picture =  $originalFileName;
         }
+
+        if ($request->hasFile('chatpictures')) {
+            $originalFileName = $request->file('chatpictures')->getClientOriginalName();
+            $request->file('chatpictures')->move(public_path('chatpictures'), $originalFileName);
+            $newroom->chatpicture =  $originalFileName;
+        }
+
         $newroom->number_of_employees = $request->nmbofempl;
         $newroom->describe = $request->describe;
         $newroom->status = $request->input('status');
@@ -116,6 +123,12 @@ class ChatRoomController extends Controller
             $originalFileName = $request->file('roompictures')->getClientOriginalName();
             $request->file('roompictures')->move(public_path('roompictures'), $originalFileName);
             $updateroom->picture = $originalFileName;
+        }
+
+        if ($request->hasFile('chatpictures')) {
+            $originalFileName = $request->file('chatpictures')->getClientOriginalName();
+            $request->file('chatpictures')->move(public_path('chatpictures'), $originalFileName);
+            $updateroom->chatpicture =  $originalFileName;
         }
 
         $updateroom->number_of_employees = $request->input('nmbofempl');
