@@ -85,7 +85,7 @@
                 <div class="checkbox">
                     <input type="checkbox" id="terms" name="terms" required>
                     <label for="terms">
-                        Elfogadom a <a href="#" target="_blank">Chat szabályzatot</a>.
+                        Elfogadom a <a href="{{route('aszf')}}" target="_blank">Chat szabályzatot</a>.
                     </label>
                 </div>
             </div> 
@@ -93,7 +93,7 @@
                 <div class="checkbox">
                     <input type="checkbox" id="priv_policy" name="priv_policy" required>
                     <label for="priv_policy">
-                        Elfogadom az <a href="#" target="_blank">Adatkezelési tájékoztatót</a>.
+                        Elfogadom az <a href="{{route('privacy.policy')}}" target="_blank">Adatkezelési tájékoztatót</a>.
                     </label>
                 </div>
             </div> 
