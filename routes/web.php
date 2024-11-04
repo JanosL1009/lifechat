@@ -41,6 +41,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('room/update/{id}', [App\Http\Controllers\ChatRoomController::class, 'GetUpdateRoom'])->name('update.room');
     Route::post('room/update/{id}', [App\Http\Controllers\ChatRoomController::class, 'UpdateRoom'])->name('update.room.post');
 
+    Route::get('room/operators/{room_id}', [App\Http\Controllers\RoomOperatorsController::class, 'selectOperator'])->name('operators.add');
+    Route::post('room/operators/add/post', [App\Http\Controllers\RoomOperatorsController::class, 'addOperator'])->name('operators.create.post');
+    Route::post('room/operators/remove/post', [App\Http\Controllers\RoomOperatorsController::class, 'removeOperator'])->name('operators.remove.post');
+
     Route::get('szemely_kereses',[App\Http\Controllers\SearchUserController::class, 'search'])->name('szemely.kereses')->middleware('auth');
     Route::get('szemely/szerkesztes/{id}', [App\Http\Controllers\SearchUserController::class, 'edit'])->name('szemely.szerkesztes');
     Route::post('szemely/szerkesztes/{id}/post', [App\Http\Controllers\SearchUserController::class, 'EditProfile_Post'])->name('szemely.szerkesztes.post');
