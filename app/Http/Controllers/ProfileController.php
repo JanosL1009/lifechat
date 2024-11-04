@@ -23,7 +23,7 @@ class ProfileController extends Controller
         ->where('user_id',$userid)
         ->first();
         $maritalStatuses = MaritalStatus::all(); 
-        $maritalstatus = $user->marital_status_id ? MaritalStatus::find($user->id) : null;
+        $maritalstatus = $user->marital_status_id ? MaritalStatus::find($user->marital_status_id) : null;
 
         $sex = $this->GetSex();
         $age = $this->GetCurrentAge();
