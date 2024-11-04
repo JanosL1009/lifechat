@@ -42,7 +42,7 @@
                     <div class="user-icons">
                         <a href="{{route('get.user.view',["userid" => 1])}}" target="_blank"><i class="fa fa-address-book"></i></a>
                         <i class="fas fa-video-camera"></i>
-                        <a href="{{route('chat.privateRoom',['roomid' => 1])}}" target="_blank"><i class="fas fa-comment"></i></a>
+                        <i class="fas fa-comment"></i>
                     </div>
                 </div>
             </div>           
@@ -53,7 +53,7 @@
                     <div class="user-icons">
                         <a href="{{route('get.user.view',["userid" => 1])}}" target="_blank"><i class="fa fa-address-book"></i></a>
                         <i class="fas fa-video-camera"></i>
-                        <a href="{{route('chat.privateRoom',['roomid' => 1])}}" target="_blank"><i class="fas fa-comment"></i></a>
+                        <i class="fas fa-comment"></i>
                     </div>
                 </div>
             </div>

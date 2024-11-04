@@ -16,7 +16,7 @@ Route::post('/profil-modositas/{id}/post', [App\Http\Controllers\ProfileControll
 
 Route::get('/chatek', [App\Http\Controllers\ChatController::class, 'index'])->name('chat.index')->middleware('auth');
 Route::get('/chat/szoba/{roomid}', [App\Http\Controllers\ChatController::class, 'generalRoom'])->name('chat.generalRoom')->middleware('auth');
-
+Route::get('/chat/privat/{roomid}', [App\Http\Controllers\ChatController::class, 'privateRoom'])->name('chat.privateRoom')->middleware('auth');
 
 Route::get('getRooms', [App\Http\Controllers\ApiController::class, 'getRooms'])->name('getRooms')->middleware('auth');
 Route::post('getRoomData', [App\Http\Controllers\ApiController::class, 'getRoomData'])->name('getRoomData')->middleware('auth');

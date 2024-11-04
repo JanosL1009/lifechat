@@ -274,7 +274,7 @@
                         <h4>Részletes adatok</h4>
                         <button class="btn btn-primary" id="editBtn">Szerkesztés</button>
                     </div>
-                    <h6>Házassági állapot: {{$maritalstatus->name}}</h6>
+                    <h6>Házassági állapot: {{$maritalstatus->name??''}}</h6>
                     <h6>Magasság: {{$height}} cm</h6>
                     <h6>Súly: {{$weight}} kg</h6>
                     <h6>Hajszín: {{$haircolor}}</h6>
