@@ -19,8 +19,8 @@ return new class extends Migration
             $table->date('birthdate');
             $table->date('lastlogin')->nullable();
             $table->tinyInteger('is_vip')->nullable(); //1: igen VIP tag
-            $table->tinyInteger('height')->nullable();
-            $table->tinyInteger('weight')->nullable();
+            $table->integer('height')->nullable();
+            $table->integer('weight')->nullable();
             $table->text('hairColor')->nullable();
             $table->text('eyeColor')->nullable();
             $table->text('work')->nullable();
