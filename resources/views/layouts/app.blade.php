@@ -275,42 +275,9 @@
           </a>
         </div>
         <nav class="sidebar-nav">
-            <div class="room lighter-blue">
-                <img src="{{ asset('img/avatar-3.jpg') }}" alt="Room Icon" class="room-icon">
-                <div class="room-details">
-                    <span class="room-name">15+ korosztály</span>
-                    <div class="room-count-icons">
-                        <span class="room-count">Létszám: <span class="room-number">23</span></span>
-                        <i class="fas fa-info-circle"  data-bs-toggle="modal" data-bs-target="#exampleModal"></i> 
-                        <i class="fas fa-star"></i> 
-                    </div>
-                </div>
-            </div>
+           
 
-            <div class="room lighter-blue">
-                <img src="{{ asset('img/avatar-3.jpg') }}" alt="Room Icon" class="room-icon">
-                <div class="room-details">
-                    <span class="room-name">Általános szoba</span>
-                    <div class="room-count-icons">
-                        <span class="room-count">Létszám: <span class="room-number">19</span></span>
-                        <i class="fas fa-info-circle"></i> 
-                        <i class="fas fa-star"></i> 
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="room lighter-blue">
-                <img src="{{ asset('img/avatar-3.jpg') }}" alt="Room Icon" class="room-icon">
-                <div class="room-details">
-                    <span class="room-name">18+ szoba</span>
-                    <div class="room-count-icons">
-                        <span class="room-count">Létszám: <span class="room-number">21</span></span>
-                        <i class="fas fa-info-circle"></i> 
-                        <i class="fas fa-star"></i> 
-                    </div>
-                </div>
-            </div>
+           
 
 
           
