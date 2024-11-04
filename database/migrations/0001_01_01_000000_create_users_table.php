@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('sex')->nullable(); //1:nő, ferfi: 0
             $table->date('birthdate');
-            $table->date('lastlogin');
+            $table->date('lastlogin')->nullable();
             $table->tinyInteger('is_vip')->nullable(); //1: igen VIP tag
             $table->tinyInteger('height')->nullable();
             $table->tinyInteger('weight')->nullable();
