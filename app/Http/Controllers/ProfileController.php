@@ -23,8 +23,8 @@ class ProfileController extends Controller
         ->where('user_id',$userid)
         ->first();
         $maritalStatuses = MaritalStatus::all(); 
-        $maritalstatus = $user->marital_status_id ? MaritalStatus::find($user->id) : null;
-
+        $maritalstatus = $user->marital_status_id ? MaritalStatus::find($user->marital_status_id) : null;
+       
         $sex = $this->GetSex();
         $age = $this->GetCurrentAge();
         $height = $user->height ?? "Nincs kitöltve";
@@ -42,7 +42,7 @@ class ProfileController extends Controller
         $defaultImage = asset('img/avatar-3.jpg');
 
         $profileImage = $user->profilepicture ? asset('storage/profilepictures/' . $user->profilepicture) : $defaultImage;
-
+       
         return view('profil.index')->with('user',$user)->with('sex',$sex)->with('age',$age)->with('height',$height)
        ->with('weight',$weight)->with('haircolor',$haircolor)->with('eyecolor',$eyecolor)->with('work',$work)
        ->with('pet',$pet)->with('maritalstatus',$maritalstatus)->with('vip',$vip)->with('lastlogin',$lastlogin)

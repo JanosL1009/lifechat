@@ -23,6 +23,7 @@ class SearchUserController extends Controller
 
         if ($query) {
             $users = User::where('email', 'like', '%' . $query . '%')
+            ->orWhere('name', 'like', '%' . $query . '%')
             ->orWhere('username', 'like', '%' . $query . '%')
             ->get();
         

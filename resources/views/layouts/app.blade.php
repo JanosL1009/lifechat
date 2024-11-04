@@ -399,7 +399,7 @@
                     roomDiv.innerHTML = `
                         <img src="/images/${room.picture}" alt="Room Icon" class="room-icon">
                         <div class="room-details">
-                            <a href="${room.id}"><span class="room-name">${room.name}</span></a>
+                            <a href="{{url('chat/szoba')}}/${room.id}"><span class="room-name">${room.name}</span></a>
                             <div class="room-count-icons">
                                 <span class="room-count">Létszám: <span class="room-number">${room.number_of_employees}</span></span>
                                 <i class="fas fa-info-circle" data-bs-toggle="modal" data-bs-target="#exampleModal" data-roomid="${room.id}" onclick="getRoomData(${room.id})"></i>

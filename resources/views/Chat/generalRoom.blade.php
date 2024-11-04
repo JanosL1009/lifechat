@@ -113,7 +113,7 @@ document.getElementById('msgSendBtn').addEventListener('click', function() {
 
 @endsection
 
-
+<!--
 <script type="importmap">
     {
         "imports": {
@@ -188,4 +188,4 @@ document.getElementById('msgSendBtn').addEventListener('click', function() {
         .catch(error => {
             console.error(error);
         });
-</script>
+</script> - -->
