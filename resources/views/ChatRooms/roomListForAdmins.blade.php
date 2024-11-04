@@ -10,7 +10,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h1 style="text-align:center;">Szobák</h1> 
                 <div>
-                    <a href="{{ route('admin.NewRoom') }}" class="btn btn-primary">Létrehozás</a> <!-- Gomb a jobb oldalon -->
+                    <a href="{{ route('admin.NewRoom') }}" class="btn btn-primary">Létrehozás</a> 
                 </div>
             </div>
             @if(session('success'))
@@ -36,6 +36,8 @@
                         <td>
                             <a href="{{ route('admin.update.room', ['id' => $room->id]) }}" class="text-primary" title="Szoba módosítása">
                                 <i class="fa fa-pencil"></i>
+                            </a>
+                            <a href="{{route('admin.operators.add', ['room_id' => $room->id])}}"><i class="fa fa-user-secret" aria-hidden="true"></i>
                             </a>
                             
                         </td>                    
