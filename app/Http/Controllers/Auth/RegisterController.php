@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\PermissionToUser;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -70,7 +71,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['username'],
             'username' => $data['username'],
             'email' => $data['email'],
@@ -79,5 +80,13 @@ class RegisterController extends Controller
             'lastlogin' => null,
             'birthdate' => $data['year'] . '-' . str_pad($data['month'], 2, '0', STR_PAD_LEFT) . '-' . str_pad($data['day'], 2, '0', STR_PAD_LEFT),
         ]);
+
+        PermissionToUser::create([
+            'user_id' => $user->id,    
+            'permission_id' => 3,       
+        ]);
+
+        return $user;
+
     }
 }
