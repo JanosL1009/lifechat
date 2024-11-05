@@ -23,7 +23,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                
+                <div class="card-header">
+                    <h1>Operátorok kezelése</h1>
+                </div>
                 <div class="card-content">
                     <div class="row">
                         <div class="col-md-6">
