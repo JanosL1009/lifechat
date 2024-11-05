@@ -5,6 +5,9 @@
     .card-header {
         text-align: center;
     }
+    .card-content {
+        padding: 20px;
+    }
     .user-list {
         border: 1px solid #dee2e6;
         padding: 10px;
@@ -18,36 +21,45 @@
 </style>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-8">
             <div class="card">
-                <div class="card-header">
-                    <h3>Elérhető operátorok</h3>
-                </div>
-                <div class="card-body user-list">
-                    <ul class="list-group" id="available-users">
-                        @foreach ($availableUsers as $user)
-                            <li class="list-group-item selected-user" data-username="{{ $user->username }}" data-email="{{ $user->email }}" data-userid="{{ $user->id }}">
-                                {{ $user->username }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4"> 
-            <div class="card">
-                <div class="card-header">
-                    <h3>Hozzáadott operátor</h3>
-                </div>
-                <div class="card-body user-list">
-                    <ul class="list-group" id="added-users">
-                        @foreach ($addedUsers as $addedUser)
-                            <li class="list-group-item added-user" data-userid="{{ $addedUser->user_id }}">
-                                {{ $addedUser->user->username }}
-                                <button class="btn btn-danger btn-sm float-end remove-user" data-userid="{{ $addedUser->user_id }}">X</button>
-                            </li>
-                        @endforeach
-                    </ul>
+                
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Elérhető operátorok</h3>
+                                </div>
+                                <div class="card-body user-list">
+                                    <ul class="list-group" id="available-users">
+                                        @foreach ($availableUsers as $user)
+                                            <li class="list-group-item selected-user" data-username="{{ $user->username }}" data-email="{{ $user->email }}" data-userid="{{ $user->id }}">
+                                                {{ $user->username }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6"> 
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Hozzáadott operátor</h3>
+                                </div>
+                                <div class="card-body user-list">
+                                    <ul class="list-group" id="added-users">
+                                        @foreach ($addedUsers as $addedUser)
+                                            <li class="list-group-item added-user" data-userid="{{ $addedUser->user_id }}">
+                                                {{ $addedUser->user->username }}
+                                                <button class="btn btn-danger btn-sm float-end remove-user" data-userid="{{ $addedUser->user_id }}">X</button>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,6 +98,11 @@
             });
         });
 
+        const roomName = '{{$room->name}}';
+        document.getElementById('roomName').innerText = roomName;
+
+
+
         $('#added-users').on('click', '.remove-user', function () {
             const userId = $(this).data('userid');
             const username = $(this).parent().contents().filter(function() {
@@ -119,7 +136,4 @@
         });
     });
 </script>
-
-
-
 @endsection

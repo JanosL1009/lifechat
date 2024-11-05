@@ -6,13 +6,16 @@
     {
         text-align: center;
     }
+    .card-header{
+        text-align: center;
+    }
 </style>
     <div class="container">
         <div class="col-md-12">
             <div class="row">
                 <div class="card">
                     <div class="card-header">
-                        <h1>Címke létrehozása</h1>
+                        <h1>Címke szerkesztése</h1>
                     </div>
                     <div class="lifechatlogo">
                         <img src="{{ asset('images/lifechat.gif') }}" alt="" style="width:300px; height:100px;">
@@ -46,4 +49,8 @@
             </div>
         </div>
     </div>
+<script>
+    const roomName = '{{$tag->name}}';
+    document.getElementById('roomName').innerText = roomName;
+</script>
 @endsection

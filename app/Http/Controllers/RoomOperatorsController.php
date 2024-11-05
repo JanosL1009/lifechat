@@ -37,7 +37,8 @@ class RoomOperatorsController extends Controller
              ->with('users', $users)
              ->with('addedUsers', $addedUsers)
              ->with('availableUsers', $availableUsers)
-             ->with('room_id', $room->id); 
+             ->with('room_id', $room->id)
+             ->with('room',$room); 
      }
 
      /*
