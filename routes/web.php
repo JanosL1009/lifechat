@@ -59,4 +59,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('pages-edit/{id}', [App\Http\Controllers\PageController::class, 'Edit_Pages'])->name('pages.edit');
     Route::post('pages-edit/{id}/post', [App\Http\Controllers\PageController::class, 'Edit_Pages_Post'])->name('pages.edit.post');
 
+    Route::get('user-ip-list', [App\Http\Controllers\UserLogsController::class, 'UserIpList'])->name('UserLogs.IpList');
+
 });
