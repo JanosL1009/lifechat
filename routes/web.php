@@ -60,5 +60,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('pages-edit/{id}/post', [App\Http\Controllers\PageController::class, 'Edit_Pages_Post'])->name('pages.edit.post');
 
     Route::get('user-ip-list', [App\Http\Controllers\UserLogsController::class, 'UserIpList'])->name('UserLogs.IpList');
-
+    Route::get('user-ip-list/export', [App\Http\Controllers\UserLogsController::class, 'export'])->name('UserLogs.export');
 });
