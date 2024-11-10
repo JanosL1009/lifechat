@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48"
+   height="48"
+   viewBox="0 0 12.7 12.7"
+   version="1.1"
+   id="svg1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     shape-rendering="crispEdges"
+     borderlayer="false"
+     showborder="false" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Réteg 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <ellipse
+       style="fill:none;stroke:#3adb7d;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:2.5;stroke-dasharray:none;stroke-dashoffset:0.188976;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path1"
+       cx="6.3287358"
+       cy="6.3287358"
+       rx="4.4559464"
+       ry="4.2622099" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.96746px;font-family:Alef;-inkscape-font-specification:Alef;text-align:center;text-anchor:middle;fill:#3adb7d;fill-opacity:1;stroke:none;stroke-width:2.16631;stroke-linejoin:round;stroke-miterlimit:2.5;stroke-dasharray:none;stroke-dashoffset:0.188976;stroke-opacity:1;paint-order:stroke fill markers"
+       x="6.1533599"
+       y="7.7404895"
+       id="text1"
+       transform="matrix(0.90953031,-0.09512607,0.11374711,1.087572,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.96746px;font-family:Elephant;-inkscape-font-specification:Elephant;fill:#3adb7d;fill-opacity:1;stroke:none;stroke-width:2.16631"
+         x="6.1533599"
+         y="7.7404895">§</tspan></text>
+  </g>
+</svg>

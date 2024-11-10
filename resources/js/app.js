@@ -2,12 +2,12 @@ import './bootstrap';
 
 import { io } from 'socket.io-client';
 
-//const socket = io('http://localhost:3000');
+const socket = io();
 
-const socket = io('https://demo.lifechat.hu:3000');
+//const socket = io('https://demo.lifechat.hu:3000');
 
 // Üzenetek fogadása
-socket.on('chat message', (msg) => {
+socket.on('chatmessage', (msg) => {
     console.log('Új üzenet:', msg);
 });
 
