@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\UserLog;
 
 class ChatController extends Controller
 {
@@ -16,7 +17,14 @@ class ChatController extends Controller
 
     public function generalRoom(Request $request,$roomid)
     {
+        $user = Auth::user();
+        $userid = $user->id;
         $room = Room::find($roomid)??null;
+
+        $userlog = new UserLog();
+        $userlog->user_id = $userid;
+        $userlog->ip_address = $request->ip();
+        $userlog->save();
 
         if(is_null($room)) 
         {
