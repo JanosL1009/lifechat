@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         MaritalStatusSeeder::class;
         $this->call([
             MaritalStatusSeeder::class,
+            PagesTableSeeder::class,
+            PermissionSeeder::class,
+            RadioSeeder::class,
         ]);
     }
 }
