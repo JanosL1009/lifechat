@@ -37,7 +37,7 @@
                             <a href="{{ route('admin.update.room', ['id' => $room->id]) }}" class="text-primary" title="Szoba módosítása">
                                 <i class="fa fa-pencil"></i>
                             </a>
-                            <a href="{{route('admin.operators.add', ['room_id' => $room->id])}}"><i class="fa fa-user-secret" aria-hidden="true"></i>
+                            <a href="{{route('admin.operators.add', ['room_id' => $room->id])}}" style="margin-left: 15px;"><i class="fa fa-user-secret" aria-hidden="true"></i>
                             </a>
                             
                         </td>                    

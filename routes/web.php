@@ -29,6 +29,9 @@ Route::get('rooms', [App\Http\Controllers\ChatRoomController::class, 'getRoomLis
 
 Route::get('user/generalinfo/{userid}', [App\Http\Controllers\ProfileController::class, 'userView'])->name('get.user.view');
 
+Route::post('enteringChatRoom/post', [App\Http\Controllers\ChatRoomController::class, 'enteringChatRoom'])->name('enteringChatRoom.post')->middleware('auth');
+Route::post('exitChatRoom/post', [App\Http\Controllers\ChatRoomController::class, 'exitChatRoom'])->name('exitChatRoom.post')->middleware('auth');
+Route::post('getUsersFromRoom/post', [App\Http\Controllers\ApiController::class, 'getRoomUsers'])->name('getRoomUsers.post')->middleware('auth');
 
 
 Route::prefix('admin')->name('admin.')->group(function () {

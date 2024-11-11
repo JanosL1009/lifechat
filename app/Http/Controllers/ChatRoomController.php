@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\ChatsInTheRoom;
+use App\Models\UserRoomEntered;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -162,6 +163,94 @@ class ChatRoomController extends Controller
     {
         $rooms = Room::paginate(10);
         return view('ChatRooms.roomList')->with('rooms',$rooms);
+    }
+
+
+    public function enteringChatRoom(Request $request)
+    {
+        $user_id = $request->input('userid');
+        $room_id = $request->input('room_id');
+
+        $authUser = Auth::id();
+
+        if($authUser != $user_id) 
+        {
+            abort(403); //nincs joga mert nemegyezik a bejelentkezett user az azonositoval
+        }
+
+        //szoba ellenorzese
+        $room = Room::find($room_id)??null;
+        if(is_null($room))
+        {
+            abort(404);
+        }
+        $roomEntered = UserRoomEntered::where('room_id',$room_id)->where('is_private',0)->where('user_id',$user_id)->first()??null;
+
+        if(is_null($roomEntered)) 
+        {
+            $roomEnter = new UserRoomEntered();
+            $roomEnter->room_id = $room_id;
+            $roomEnter->is_private = 0;
+            $roomEnter->user_id = $user_id;
+    
+            try {
+                if($roomEnter->save()) 
+                {
+                    return json_encode(["result" => 1]);
+                }
+                else 
+                {
+                    return json_encode(["result" => 0]);
+                }
+            }
+            catch(\Exception $e) 
+            {
+                return json_encode(["result" => $e->getMessage()]);
+            }
+        }
+        else 
+        {
+            return json_encode(["result" => 0]);
+        }
+      
+       
+
+    }
+
+    public function exitChatRoom(Request $request)
+    {
+        $user_id = $request->input('userid');
+        $room_id = $request->input('room_id');
+
+        $authUser = Auth::id();
+
+        if($authUser != $user_id) 
+        {
+            abort(403); //nincs joga mert nemegyezik a bejelentkezett user az azonositoval
+        }
+
+        //szoba ellenorzese
+        $room = Room::find($room_id)??null;
+        if(is_null($room))
+        {
+            abort(404);
+        }
+
+        $roomEntered = UserRoomEntered::where('room_id',$room_id)->where('is_private',0)->where('user_id',$user_id)->first()??null;
+       
+       
+            if(is_null($roomEntered)) 
+            {
+                return json_encode(["result" => 0]);
+            }
+            else 
+            {
+                $roomEntered->delete();
+                return json_encode(["result" => 1]);
+            }
+        
+       
+
     }
 
 }

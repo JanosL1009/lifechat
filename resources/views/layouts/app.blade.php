@@ -263,7 +263,10 @@
         font-size: 16px;
         border-bottom: 1px solid #555;
     }
- 
+    .bg-color-red{
+       
+    
+    }
 
      </style>
 </head>
@@ -274,7 +277,7 @@
             <img src="{{asset('images/lifechat.gif')}}" alt="logo"  style="width: 100%;"/>
           </a>
         </div>
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav" id="enteredRooms">
            
 
            
@@ -301,9 +304,12 @@
                     <div class="header-left">
                         <a href="{{route("felhasznalo.profil")}}" class="ml-15"><i class="fas fa-user"></i> </a>
                         <a href="#" class="ml-15"><i class="fas fa-cog"></i></a>
-                        <a href="{{route('admin.szemely.kereses')}}" class="ml-15"><i class="fa-solid fa-magnifying-glass"></i></a> 
-                        <a href="{{route('admin.roomlist')}}" class="ml-15"><i class="fa fa-building" aria-hidden="true"></i></a> 
-                        <a href="{{route('admin.tags.list')}}" class="ml-15"><i class="fa-solid fa-tag"></i></a>
+                        <a href="{{route('get.rooms.list')}}" class="ml-15 " title="Szobák"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
+
+                        <a href="#" class="ml-15" style="color: red;"> | </a>
+                        <a href="{{route('admin.szemely.kereses')}}" class="ml-15 b" title="Felhasználó keresés - adminisztrátor"><i class="fa-solid fa-magnifying-glass g-color-red"></i></a> 
+                        <a href="{{route('admin.roomlist')}}" class="ml-15 " title="Szobák kezelése - adminisztrátor"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
+                        <a href="{{route('admin.tags.list')}}" class="ml-15 " title="Címkék, tagek kezelése - adminisztrátor"><i class="fa-solid fa-tag bg-color-red"></i></a>
 
                     </div>
                   
@@ -383,23 +389,47 @@
         
         var room_id = 1;
     document.addEventListener("DOMContentLoaded", function() {
-        // Lekérdezi az adatokat a getRooms végpontról
-        fetch('{{route('getRooms')}}')
-            .then(response => response.json())
-            .then(data => {
-                // Szoba lista hozzáadása a DOM-hoz
-                const sidebarNav = document.querySelector('.sidebar-nav');
-    
-                data.forEach(room => {
-                    // Új szoba HTML szerkezete
+
+
+       
+        setInterval(() => {
+    // Lekérdezi az adatokat a `getRooms` végpontról
+    fetch('{{ route('getRooms') }}')
+        .then(response => response.json())
+        .then(data => {
+            const sidebarNav = document.querySelector('.sidebar-nav');
+
+            // Először össze kell gyűjteni a jelenlegi szobák ID-jait a DOM-ból
+            const currentRoomIds = Array.from(document.querySelectorAll('.sidebar-nav .room'))
+                .map(roomDiv => parseInt(roomDiv.id.replace('room-', '')));
+
+            // Létrehozzuk egy új szett a szerverről érkező szobák ID-iből
+            const newRoomIds = data.map(room => room.id);
+
+            // 1. Töröljük a szobákat a DOM-ból, amelyek már nincsenek a szerver válaszában
+            currentRoomIds.forEach(id => {
+                if (!newRoomIds.includes(id)) {
+                    const roomToRemove = document.getElementById(`room-${id}`);
+                    if (roomToRemove) {
+                        roomToRemove.remove();
+                    }
+                }
+            });
+
+            // 2. Hozzáadjuk az új szobákat, amelyek még nem szerepelnek a DOM-ban
+            data.forEach(room => {
+                // Ha a szoba már létezik, ne hozzuk létre újra
+                if (!document.getElementById(`room-${room.id}`)) {
                     const roomDiv = document.createElement('div');
                     roomDiv.id = `room-${room.id}`;
                     roomDiv.classList.add('room', 'lighter-blue');
-    
+
                     roomDiv.innerHTML = `
                         <img src="/images/${room.picture}" alt="Room Icon" class="room-icon">
                         <div class="room-details">
-                            <a href="{{url('chat/szoba')}}/${room.id}"><span class="room-name">${room.name}</span></a>
+                            <a href="{{ url('chat/szoba') }}/${room.id}">
+                                <span class="room-name">${room.name}</span>
+                            </a>
                             <div class="room-count-icons">
                                 <span class="room-count">Létszám: <span class="room-number">${room.number_of_employees}</span></span>
                                 <i class="fas fa-info-circle" data-bs-toggle="modal" data-bs-target="#exampleModal" data-roomid="${room.id}" onclick="getRoomData(${room.id})"></i>
@@ -407,14 +437,21 @@
                             </div>
                         </div>
                     `;
-    
+
                     // Szoba hozzáadása a sidebarNav konténerhez
                     sidebarNav.appendChild(roomDiv);
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    });
+                }
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}, 1700); 
 
+
+
+    
+    
+    });
+    
     function getRoomData(room_id)
     {
       
@@ -440,6 +477,8 @@
             })
             .catch(error => console.error('Error:', error));
     }
+
+    
     </script>
 </body>
 </html>

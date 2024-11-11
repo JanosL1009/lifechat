@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PermissionToUser::class);
     }
+
+    public function roomoperator()
+    {
+        return $this->belongsTo(RoomOperators::class, 'id','user_id');
+    }
 }

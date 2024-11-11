@@ -2,6 +2,25 @@
 @section('content')
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.0/ckeditor5.css" />
 
+<style>
+    .min32px {
+    width: 32px;
+    height: 32px;
+  
+    animation: pulse 1s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2); /* Növelje meg a méretet 20%-kal */
+        opacity: 0.7; /* Csökkentse az áttetszőséget */
+    }
+}
+</style>
 
 <div class="row">
     <div class="col-12 col-md-9">
@@ -35,29 +54,7 @@
 
     <div class="col-12 col-md-3">
         <div class="user-list">
-            <div class="user">
-                <img src="{{ asset('img/avatar-3.jpg') }}" alt="User avatar" class="user-avatar">
-                <div class="user-details">
-                    <span class="user-name">User1</span>
-                    <div class="user-icons">
-                        <a href="{{route('get.user.view',["userid" => 1])}}" target="_blank"><i class="fa fa-address-book"></i></a>
-                        <i class="fas fa-video-camera"></i>
-                        <a href="{{route('chat.privateRoom',['roomid' => 1])}}" target="_blank"><i class="fas fa-comment"></i></a>
-                    </div>
-                </div>
-            </div>           
-            <div class="user">
-                <img src="{{ asset('img/avatar-3.jpg') }}" alt="User avatar" class="user-avatar">
-                <div class="user-details">
-                    <span class="user-name">User1</span>
-                    <div class="user-icons">
-                        <a href="{{route('get.user.view',["userid" => 1])}}" target="_blank"><i class="fa fa-address-book"></i></a>
-                        <i class="fas fa-video-camera"></i>
-                        <a href="{{route('chat.privateRoom',['roomid' => 1])}}" target="_blank"><i class="fas fa-comment"></i></a>
-                    </div>
-                </div>
-            </div>
-            
+                 
         </div>
     </div>
 </div>
@@ -66,12 +63,13 @@
 
 
 <script>
+ const roomID = {{$room->id}};
 const roomName = '{{$room->name}}';
 document.getElementById('roomName').innerText = roomName;
 
 document.getElementById('msgSendBtn').addEventListener('click', function() {
     // Az értékek beolvasása az űrlap mezőkből vagy más forrásokból
-    const roomID = room_id;
+   
     const message = document.getElementById('sendmessage').value;
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -103,13 +101,86 @@ document.getElementById('msgSendBtn').addEventListener('click', function() {
 });
 
 
+//const roomId = 1; // A szoba ID-t állítsd be dinamikusan szükség szerint
+
+setInterval(() => {
+    fetch('{{ route('getRoomUsers.post') }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ room_id: roomID })
+    })
+    .then(response => response.json())
+    .then(users => {
+        const userList = document.querySelector('.user-list');
+
+        // Jelenlegi felhasználók ID-jainak összegyűjtése a DOM-ból
+        const currentUserIds = Array.from(document.querySelectorAll('.user'))
+            .map(userDiv => parseInt(userDiv.id.replace('user-', '')));
+
+        // Szerverről érkező új felhasználók ID-inak gyűjteménye
+        const newUserIds = users.map(user => user.id);
+
+        // 1. Töröljük a DOM-ból azokat a felhasználókat, akik már nincsenek a szerver válaszában
+        currentUserIds.forEach(id => {
+            if (!newUserIds.includes(id)) {
+                const userToRemove = document.getElementById(`user-${id}`);
+                if (userToRemove) {
+                    userToRemove.remove();
+                }
+            }
+        });
+
+        // 2. Hozzáadjuk az új felhasználókat, akik még nem szerepelnek a DOM-ban
+        users.forEach(user => {
+            if (!document.getElementById(`user-${user.id}`)) {
+                const userDiv = document.createElement('div');
+                userDiv.id = `user-${user.id}`;
+                userDiv.classList.add('user');
+                let opPic = ``;
+                if(user.op_room_id == roomID) 
+                {
+                    opPic = `<span><img src="{{asset('images/roomicons/szobaop.png')}}" class="min32px" title="Szoba operátor"></span`;
+                }
+
+                if(user.p_id == 1) 
+                {
+                    opPic = opPic +`<span><img src="{{asset('images/roomicons/admin.png')}}" class="min32px" title="Adminisztrátor"></span`;
+                }
+
+                userDiv.innerHTML = `
+                     <img src="/images/${user.profilepicture}" alt="User avatar" class="user-avatar">
+                    <div class="user-details">
+                        <span class="user-name">${user.username}</span>
+                        <div class="user-icons">
+                            <!-- Dinamikus linkek létrehozása -->
+                            <a href="/get/user/view/${user.id}" target="_blank">
+                                <i class="fa fa-address-book"></i>
+                            </a>
+                            <i class="fa-solid fa-phone"></i>
+                            <i class="fas fa-video-camera"></i>
+                            <a href="/chat/privateRoom/${user.id}" target="_blank">
+                                <i class="fas fa-comment"></i>
+                            </a>
+                            `+ opPic +`
+                        </div>
+                    </div>
+                `;
+
+                // Hozzáadjuk a `user-list` konténerhez
+                userList.appendChild(userDiv);
+            }
+        });
+    })
+    .catch(error => console.error('Error:', error));
+}, 1700);
 
 </script>
 
 
-<script>
- 
-</script>
+
 
 @endsection
 
