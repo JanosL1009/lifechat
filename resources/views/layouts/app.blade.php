@@ -317,6 +317,7 @@
                         <a href="{{route('admin.szemely.kereses')}}" class="ml-15 b" title="Felhasználó keresés - adminisztrátor"><i class="fa-solid fa-magnifying-glass g-color-red"></i></a> 
                         <a href="{{route('admin.roomlist')}}" class="ml-15 " title="Szobák kezelése - adminisztrátor"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
                         <a href="{{route('admin.tags.list')}}" class="ml-15 " title="Címkék, tagek kezelése - adminisztrátor"><i class="fa-solid fa-tag bg-color-red"></i></a>
+                        <a href="#" class="ml-15 " title="Rádiók kezelése - adminisztrátor"><i class="far fa-file-audio"></i></a>
 
                     </div>
                   
@@ -332,7 +333,7 @@
 
                         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="logout">
                             <i class="fa-solid fa-right-from-bracket"></i>
-                            Kijelentkezés
+                           
                         </a>
                     @endauth
 
