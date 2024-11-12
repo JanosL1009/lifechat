@@ -13,6 +13,7 @@
 {
     max-height: 35px;
 }
+.ban :before{ color:red; }
 
 @keyframes pulse {
     0%, 100% {
@@ -170,12 +171,14 @@ setInterval(() => {
                 let opPic = ``;
                 if(user.op_room_id == roomID) 
                 {
-                    opPic = `<span><img src="{{asset('images/roomicons/szobaop.png')}}" class="min32px" title="Szoba operátor"></span`;
+                    opPic = `<span><img src="{{asset('images/roomicons/szobaop.png')}}" class="min32px" title="Szoba operátor"></span>
+                                <a href="#" class="ban" id="ban-user-${user.id}" title="Felhasználó tiltása" onclick="UserBan(${user.id})"><i class="fas fa-ban"></i></a> `;
                 }
 
                 if(user.p_id == 1) 
                 {
-                    opPic = opPic +`<span><img src="{{asset('images/roomicons/admin.png')}}" class="min32px" title="Adminisztrátor"></span`;
+                    opPic = opPic +`<span><img src="{{asset('images/roomicons/admin.png')}}" class="min32px" title="Adminisztrátor"></span>
+                    <a href="#" class="ban" id="ban-user-${user.id}" title="Felhasználó tiltása" onclick="UserBan(${user.id})"><i class="fas fa-ban"></i></a>`;
                 }
 
                 userDiv.innerHTML = `
@@ -204,6 +207,11 @@ setInterval(() => {
     })
     .catch(error => console.error('Error:', error));
 }, 1700);
+
+function UserBan(id)
+{
+    alert('ban ' + id);
+}
 
 </script>
 

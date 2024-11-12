@@ -318,6 +318,8 @@
                         <a href="{{route('admin.roomlist')}}" class="ml-15 " title="Szobák kezelése - adminisztrátor"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
                         <a href="{{route('admin.tags.list')}}" class="ml-15 " title="Címkék, tagek kezelése - adminisztrátor"><i class="fa-solid fa-tag bg-color-red"></i></a>
                         <a href="#" class="ml-15 " title="Rádiók kezelése - adminisztrátor"><i class="far fa-file-audio"></i></a>
+                        <a href="#" class="ml-15 " title="Tiltott felhasználók - adminisztrátor"><i class="fas fa-user-slash"></i></a>
+                        <a href="#" class="ml-15 " title="IP lista - adminisztrátor"><i class="fas fa-history"></i></a>
 
                     </div>
                   
