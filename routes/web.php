@@ -33,6 +33,7 @@ Route::post('enteringChatRoom/post', [App\Http\Controllers\ChatRoomController::c
 Route::post('exitChatRoom/post', [App\Http\Controllers\ChatRoomController::class, 'exitChatRoom'])->name('exitChatRoom.post')->middleware('auth');
 Route::post('getUsersFromRoom/post', [App\Http\Controllers\ApiController::class, 'getRoomUsers'])->name('getRoomUsers.post')->middleware('auth');
 
+Route::post('getRadiList/post', [App\Http\Controllers\ApiController::class, 'getRadioList'])->name('getRadioList')->middleware('auth');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('room-list', [App\Http\Controllers\ChatRoomController::class, 'adminRoomList'])->name('roomlist');

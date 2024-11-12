@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Radio;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\User;
@@ -46,5 +47,12 @@ class ApiController extends Controller
         
         return json_encode($users);
 
+    }
+
+    public function getRadioList(Request $request)
+    {
+        $radios = Radio::where('radioStatus', 1)->get();
+
+        return json_encode($radios);
     }
 }

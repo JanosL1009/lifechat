@@ -267,6 +267,10 @@
        
     
     }
+#radioPlayer {
+   width: 100%;
+    display: none;
+}
 
      </style>
 </head>
@@ -279,9 +283,12 @@
         </div>
         <nav class="sidebar-nav" id="enteredRooms">
            
-
+            <audio id="radioPlayer" controls>
+                <source id="radioSource" src="" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
            
-
+           
 
           
         </nav>
@@ -305,7 +312,7 @@
                         <a href="{{route("felhasznalo.profil")}}" class="ml-15"><i class="fas fa-user"></i> </a>
                         <a href="#" class="ml-15"><i class="fas fa-cog"></i></a>
                         <a href="{{route('get.rooms.list')}}" class="ml-15 " title="Szobák"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
-
+                        <a href="#" class="ml-15" data-bs-toggle="modal" data-bs-target="#radiosModal"  ><i class="fa-solid fa-music"></i></a>
                         <a href="#" class="ml-15" style="color: red;"> | </a>
                         <a href="{{route('admin.szemely.kereses')}}" class="ml-15 b" title="Felhasználó keresés - adminisztrátor"><i class="fa-solid fa-magnifying-glass g-color-red"></i></a> 
                         <a href="{{route('admin.roomlist')}}" class="ml-15 " title="Szobák kezelése - adminisztrátor"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
@@ -382,7 +389,35 @@
     </div>
   </div>
       
+  <div class="modal fade" id="radiosModal" tabindex="-1" aria-labelledby="radiosModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="radiosModalLabel">Rádió lista</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <table class="table" id="radioListTable">
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+              </div>
+          <div>
+            <p id="room-theme-describe"></p>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Bezárás</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
       
+  
+
       <script src="http://localhost/admintemplate/assets/js/main.js"></script>
       <script>
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -390,8 +425,6 @@
         var room_id = 1;
     document.addEventListener("DOMContentLoaded", function() {
 
-
-       
         setInterval(() => {
     // Lekérdezi az adatokat a `getRooms` végpontról
     fetch('{{ route('getRooms') }}')
@@ -478,7 +511,73 @@
             .catch(error => console.error('Error:', error));
     }
 
+      // Lekérdezi a rádiókat a szerverről
+function fetchRadioList() {
+    fetch('{{ route("getRadioList") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Feltölti a táblázatot a kapott adatokkal
+        const radioTableBody = document.querySelector('#radioListTable tbody');
+        radioTableBody.innerHTML = ''; // Tisztítja a táblázatot
+
+        data.forEach(radio => {
+            const row = document.createElement('tr');
+
+            // Rádió neve oszlop
+            const nameCell = document.createElement('td');
+            nameCell.textContent = radio.radioName;
+            row.appendChild(nameCell);
+
+            // Play ikon oszlop
+            const playCell = document.createElement('td');
+            playCell.innerHTML = `<button class="btn btn-primary play-btn" data-url="${radio.radioURL}"><i class="fa-solid fa-play"></i> Play</button>`;
+            row.appendChild(playCell);
+
+            // Sor hozzáadása a táblázathoz
+            radioTableBody.appendChild(row);
+        });
+
+        // Eseménykezelő hozzáadása a Play gombokhoz
+        const playButtons = document.querySelectorAll('.play-btn');
+        playButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const radioURL = this.getAttribute('data-url');
+                playRadio(radioURL);
+            });
+        });
+    })
+    .catch(error => console.error('Error fetching radio list:', error));
+}
+
+// Felelős a rádió lejátszásáért
+function playRadio(radioURL) {
+    const player = document.getElementById('radioPlayer');
+    const source = document.getElementById('radioSource');
+    document.getElementById("radioPlayer").style.display = "block"; 
+    // Beállítja a kiválasztott rádió URL-jét
+    source.src = radioURL;
+
+    // Frissíti és elindítja a lejátszót
+    player.load(); // Újraindítja az audió lejátszót
+    player.play(); // Lejátsza a rádiót
     
+}
+
+// Amikor a modál megnyílik, lekérdezi a rádiókat
+document.addEventListener('DOMContentLoaded', function() {
+    const radiosModal = document.getElementById('radiosModal');
+    
+    radiosModal.addEventListener('shown.bs.modal', function () {
+        fetchRadioList();
+    });
+});
+   
     </script>
 </body>
 </html>
