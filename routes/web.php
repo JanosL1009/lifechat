@@ -37,7 +37,7 @@ Route::post('getUsersFromRoom/post', [App\Http\Controllers\ApiController::class,
 
 Route::post('getRadiList/post', [App\Http\Controllers\ApiController::class, 'getRadioList'])->name('getRadioList')->middleware('auth');
 
-Route::post('xhr/rooms', [App\Http\Controllers\ApiController::class, 'getRoomList'])->name('xhr.rooms.list');
+Route::post('xhr/room/content', [App\Http\Controllers\ApiController::class, 'loadRoomContent'])->name('xhr.rooms.list');
 
 
 //userek bannolasa az altalnos szobakbol
