@@ -69,6 +69,40 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="userbanModal" tabindex="-1" aria-labelledby="userbanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userbanModalLabel">Felhasználó tiltása</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <p>Biztosan tiltod a felhasználót?</p>
+            <p>Tiltás időtartam: </p>
+            <select class="form-input">
+                @isset($banModes)
+                    @foreach ($banModes as $mode)
+                        <option id="{{$mode->id}}">{{$mode->ban_name}}</option>
+                    @endforeach
+                @endisset
+            </select>
+          </div>
+          <div>
+            <p id="room-theme-describe"></p>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+            <input type="hidden" id="banneduser" name="banneduser" value="0">
+            <input type="hidden" id="roomid" name="roomid" value="0">
+            <button type="button" id="banBtn" class="btn btn-scondary" onclick="banFunction()">Tiltás</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Bezárás</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -172,13 +206,13 @@ setInterval(() => {
                 if(user.op_room_id == roomID) 
                 {
                     opPic = `<span><img src="{{asset('images/roomicons/szobaop.png')}}" class="min32px" title="Szoba operátor"></span>
-                                <a href="#" class="ban" id="ban-user-${user.id}" title="Felhasználó tiltása" onclick="UserBan(${user.id})"><i class="fas fa-ban"></i></a> `;
+                                <a href="#" class="ban" id="ban-user-${user.id}" data-bs-toggle="modal" data-bs-target="#userbanModal"  title="Felhasználó tiltása" onclick="UserBan(${user.id})"><i class="fas fa-ban"></i></a> `;
                 }
 
                 if(user.p_id == 1) 
                 {
                     opPic = opPic +`<span><img src="{{asset('images/roomicons/admin.png')}}" class="min32px" title="Adminisztrátor"></span>
-                    <a href="#" class="ban" id="ban-user-${user.id}" title="Felhasználó tiltása" onclick="UserBan(${user.id})"><i class="fas fa-ban"></i></a>`;
+                    <a href="#" class="ban" id="ban-user-${user.id}" data-bs-toggle="modal" data-bs-target="#userbanModal" title="Felhasználó tiltása" onclick="UserBan(${user.id})"><i class="fas fa-ban"></i></a>`;
                 }
 
                 userDiv.innerHTML = `
@@ -208,16 +242,24 @@ setInterval(() => {
     .catch(error => console.error('Error:', error));
 }, 1700);
 
+
+/*befejezni hogy az inputokat legyenek feltoltve a modal kattinttaskor*/
 function UserBan(id)
 {
-    alert('ban ' + id);
+   
 }
 
 
 function UserUnban(id)
 {
-    alert('ban ' + id);
+   
 }
+
+function banFunction()
+{
+    alert("bannolva lesz");
+}
+
 
 </script>
 

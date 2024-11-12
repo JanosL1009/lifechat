@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             PagesTableSeeder::class,
             PermissionSeeder::class,
             RadioSeeder::class,
+            BanModes::class,
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BanMode;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
@@ -31,8 +32,9 @@ class ChatController extends Controller
             abort(404);
         }
 
+        $banList = BanMode::all();
 
-        return view('Chat.generalRoom')->with('room',$room);
+        return view('Chat.generalRoom')->with('room',$room)->with('banModes',$banList);
     }
 
 
