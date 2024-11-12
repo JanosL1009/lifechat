@@ -37,7 +37,7 @@
                         <td>{{$radio->radioName }}</td>
                         <td>{{$radio->radioURL}}</td>
                         <td>
-                            <a href="{{route('admin.radio.edit', $radio->id)}}" class="btn btn-warning">Szerkesztés</a>
+                            <a href="{{route('admin.radio.edit', $radio->id)}}"><i class="fa fa-pencil"></i></a>
                             <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" data-valesid="{{$radio->id}}">
                                 <i class="fa fa-trash deltool" data-toggle="tooltip" title="Törlés" data-valesid="{{$radio->id}}"></i>
                             </a>
