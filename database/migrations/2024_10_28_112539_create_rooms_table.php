@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('chatpicture')->nullable();
             $table->string('number_of_employees'); //letszam, az aktualisa szobaban
             $table->string('describe');
+            $table->string('welcome_msg')->nullable();
             $table->tinyInteger('status')->nullable(); // null vagy 1: nem megjelenithető, 1: nyitva; 2-es: zárva e megjelenhet, nem léphet be senki; 3-as zárva, nem jelenik meg és nem léphet be senki
             $table->timestamps();
         });
