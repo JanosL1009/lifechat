@@ -55,4 +55,17 @@ class ApiController extends Controller
 
         return json_encode($radios);
     }
+
+
+    public function setUserban(Request $request)
+    {
+        $room_id = 0;
+        $user_id = 0;
+    }
+
+    public function setUserUnban(Request $request)
+    {
+        $room_id = 0;
+        $user_id = 0;
+    } 
 }

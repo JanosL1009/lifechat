@@ -35,6 +35,11 @@ Route::post('getUsersFromRoom/post', [App\Http\Controllers\ApiController::class,
 
 Route::post('getRadiList/post', [App\Http\Controllers\ApiController::class, 'getRadioList'])->name('getRadioList')->middleware('auth');
 
+//userek bannolasa az altalnos szobakbol
+Route::post('chat/user/ban/set', [App\Http\Controllers\ApiController::class, 'setUserban'])->name('Userban.Ban')->middleware('auth');
+Route::post('chat/user/ban/unban', [App\Http\Controllers\ApiController::class, 'setUserUnban'])->name('Userban.Unban')->middleware('auth');
+
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('room-list', [App\Http\Controllers\ChatRoomController::class, 'adminRoomList'])->name('roomlist');
 

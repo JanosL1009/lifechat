@@ -213,6 +213,12 @@ function UserBan(id)
     alert('ban ' + id);
 }
 
+
+function UserUnban(id)
+{
+    alert('ban ' + id);
+}
+
 </script>
 
 
