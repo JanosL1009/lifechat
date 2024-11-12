@@ -51,17 +51,17 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Törlés</h4>
+                            <h4 class="modal-title">Feloldás</h4>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <p>Biztosan törölni szeretnéd?</p>
-                            <p style="color: #ff0000;">A törlés gomb megnyomása után végleg törlődik az adatbázisból!</p>
+                            <p>Biztosan felszeretnéd oldani? <p>
+                            <p style="color: #ff0000;">A Feloldás gomb megnyomása után feloldódik a bannolt személy!</p>
                         </div>
                         <div class="modal-footer">
                             <input type="number" class="d-none" id="banid" name="banid" value="-1">
                             <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Mégse">
-                            <input type="button" id="esemenyTorlesBtn" class="btn btn-danger" value="Törlés">
+                            <input type="button" id="esemenyTorlesBtn" class="btn btn-danger" value="Feloldás">
                         </div>
                     </div>
                 </div>
