@@ -620,6 +620,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         </script>
         <script>
+              const baseUrl = "{{ route('chat.generalRoom', ['roomid' => ':roomid']) }}";
             function enteringRoom(room_id)
             {
                 
@@ -644,7 +645,22 @@ document.addEventListener('DOMContentLoaded', function() {
                             document.getElementById('roomName').innerHTML = document.getElementById('room-id-'+room_id).innerHTML;
                             chatContent.innerHTML = data.html;
                         })
-                        .catch(error => console.error('Hiba a betöltés során:', error));
+                        .catch(error => {
+                            console.error('Hiba a betöltés során: ' + error);
+
+                            // Specifikus TypeError kezelés
+                            if (error instanceof TypeError && error.message.includes('Cannot set properties of null')) {
+                                // Új URL generálása room_id-val
+                               
+                                const url = baseUrl.replace(':roomid', roomId);
+
+                                // Átirányítás az új URL-re
+                                window.location.href = url;
+                            } else {
+                                alert('Ismeretlen hiba történt. Kérjük, próbáld újra!');
+                            }
+                        });
+                        
                     
                 
             }

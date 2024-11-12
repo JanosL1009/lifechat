@@ -1,0 +1,1 @@
+<p>{{$room->welcome_msg}}</p>
