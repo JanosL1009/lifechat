@@ -62,4 +62,39 @@ class ChatController extends Controller
         return view('Chat.privateRoom')->with('room',$room);
     }
     
+    public function upload(Request $request)
+    {
+        // if ($request->hasFile('upload')) {
+        //     // Ellenőrizzük, hogy valóban van fájl
+        //     $file = $request->file('upload');
+            
+        //     // A fájl neve, itt az időbélyeggel történik az egyediség biztosítása
+        //     $filename = time() . '_' . $file->getClientOriginalName();
+    
+        //     // A fájl tárolása a `public/ckeditorimg` mappába
+        //     $filePath = $file->move(public_path('ckeditorimg'), $filename);
+    
+        //     // A fájl elérési útja
+        //     $url = asset('ckeditorimg/' . $filename);
+    
+        //     // JSON válasz a képpel
+        //     return response()->json([
+        //         'url' => $url,
+        //     ]);
+        // }
+    
+        // return response()->json(['error' => 'Kép feltöltése sikertelen.'], 400);
+
+     
+        $request->validate([
+            'upload' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
+
+        $image = $request->file('upload');
+        $imagePath = $image->store('images', 'public');
+
+        return response()->json(['url' => asset('storage/' . $imagePath)]);
+    
+    
+    }
 }
