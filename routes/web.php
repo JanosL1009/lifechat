@@ -20,6 +20,8 @@ Route::post('/profil-modositas/{id}/post', [App\Http\Controllers\ProfileControll
 Route::get('/chatek', [App\Http\Controllers\ChatController::class, 'index'])->name('chat.index')->middleware('auth');
 Route::get('/chat/szoba/{roomid}', [App\Http\Controllers\ChatController::class, 'generalRoom'])->name('chat.generalRoom')->middleware('auth');
 Route::get('/chat/privat/{roomid}', [App\Http\Controllers\ChatController::class, 'privateRoom'])->name('chat.privateRoom')->middleware('auth');
+Route::post('chat/upload-image', [App\Http\Controllers\ChatController::class, 'upload'])->name('upload.image');
+
 
 Route::get('getRooms', [App\Http\Controllers\ApiController::class, 'getRooms'])->name('getRooms')->middleware('auth');
 Route::post('getRoomData', [App\Http\Controllers\ApiController::class, 'getRoomData'])->name('getRoomData')->middleware('auth');
@@ -32,6 +34,12 @@ Route::get('user/generalinfo/{userid}', [App\Http\Controllers\ProfileController:
 Route::post('enteringChatRoom/post', [App\Http\Controllers\ChatRoomController::class, 'enteringChatRoom'])->name('enteringChatRoom.post')->middleware('auth');
 Route::post('exitChatRoom/post', [App\Http\Controllers\ChatRoomController::class, 'exitChatRoom'])->name('exitChatRoom.post')->middleware('auth');
 Route::post('getUsersFromRoom/post', [App\Http\Controllers\ApiController::class, 'getRoomUsers'])->name('getRoomUsers.post')->middleware('auth');
+
+Route::post('getRadiList/post', [App\Http\Controllers\ApiController::class, 'getRadioList'])->name('getRadioList')->middleware('auth');
+
+//userek bannolasa az altalnos szobakbol
+Route::post('chat/user/ban/set', [App\Http\Controllers\ApiController::class, 'setUserban'])->name('Userban.Ban')->middleware('auth');
+Route::post('chat/user/ban/unban', [App\Http\Controllers\ApiController::class, 'setUserUnban'])->name('Userban.Unban')->middleware('auth');
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -64,4 +72,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('user-ip-list', [App\Http\Controllers\UserLogsController::class, 'UserIpList'])->name('UserLogs.IpList');
     Route::get('user-ip-list/export', [App\Http\Controllers\UserLogsController::class, 'export'])->name('UserLogs.export');
+
+    Route::get('radios', [App\Http\Controllers\RadioController::class, 'index'])->name('radio.index');
+    Route::get('radio/add', [App\Http\Controllers\RadioController::class, 'Create'])->name('radio.create');
+    Route::post('radio/add/post', [App\Http\Controllers\RadioController::class, 'Create_Post'])->name('radio.create.post');
+
+    Route::get('radio/edit/{id}', [App\Http\Controllers\RadioController::class, 'Edit'])->name('radio.edit');
+    Route::post('radio/edit/post', [App\Http\Controllers\RadioController::class, 'Edit_Post'])->name('radio.edit.post');
+    Route::post('radio/delete/post', [App\Http\Controllers\RadioController::class, 'Delete'])->name('radio.delete.post');
+
+
 });

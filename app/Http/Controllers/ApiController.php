@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Radio;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\User;
@@ -47,4 +48,24 @@ class ApiController extends Controller
         return json_encode($users);
 
     }
+
+    public function getRadioList(Request $request)
+    {
+        $radios = Radio::where('radioStatus', 1)->get();
+
+        return json_encode($radios);
+    }
+
+
+    public function setUserban(Request $request)
+    {
+        $room_id = 0;
+        $user_id = 0;
+    }
+
+    public function setUserUnban(Request $request)
+    {
+        $room_id = 0;
+        $user_id = 0;
+    } 
 }

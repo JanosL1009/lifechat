@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.0/ckeditor5.css" />
+
 
 <style>
     .min32px {
@@ -9,6 +9,11 @@
   
     animation: pulse 1s infinite ease-in-out;
 }
+#sendmessage
+{
+    max-height: 35px;
+}
+.ban :before{ color:red; }
 
 @keyframes pulse {
     0%, 100% {
@@ -20,13 +25,17 @@
         opacity: 0.7; /* Csökkentse az áttetszőséget */
     }
 }
+
+
+  
+
 </style>
 
 <div class="row">
     <div class="col-12 col-md-9">
         
         <div class="row">
-            <div class="chat-messages">
+            <div class="chat-messages" id="chatMessages">
                 <p><span class="moderator">ModiUser-Moderator:</span> Szépen írjon mindenki</p>
                 <p><span class="user1">User1:</span> Hello, mi van itt?</p>
                 <p><span class="user2">User2:</span> Szia, hogy vagy??</p>
@@ -60,12 +69,66 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="userbanModal" tabindex="-1" aria-labelledby="userbanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userbanModalLabel">Felhasználó tiltása</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <p>Biztosan tiltod a felhasználót?</p>
+            <p>Tiltás időtartam: </p>
+            <select class="form-input">
+                @isset($banModes)
+                    @foreach ($banModes as $mode)
+                        <option id="{{$mode->id}}">{{$mode->ban_name}}</option>
+                    @endforeach
+                @endisset
+            </select>
+          </div>
+          <div>
+            <p id="room-theme-describe"></p>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+            <input type="hidden" id="banneduser" name="banneduser" value="0">
+            <input type="hidden" id="roomid" name="roomid" value="0">
+            <button type="button" id="banBtn" class="btn btn-scondary" onclick="banFunction()">Tiltás</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Bezárás</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
 <script>
+       function adjustChatHeight() {
+        const chatMessages = document.getElementById('chatMessages');
+        const windowHeight = window.innerHeight;
+
+        // Ha az eszköz szélessége kisebb mint 768px, mobil eszközként kezeljük
+        if (window.innerWidth < 768) {
+            chatMessages.style.height = (windowHeight * 0.65) + 'px'; // 60% mobilon
+        } else {
+            chatMessages.style.height = (windowHeight * 0.8) + 'px'; // 80% asztali gépen
+        }
+    }
+
+    // Az oldal betöltésekor és ablak átméretezésekor meghívja a függvényt
+    window.addEventListener('load', adjustChatHeight);
+    window.addEventListener('resize', adjustChatHeight);
+
+
  const roomID = {{$room->id}};
 const roomName = '{{$room->name}}';
 document.getElementById('roomName').innerText = roomName;
+
+
 
 document.getElementById('msgSendBtn').addEventListener('click', function() {
     // Az értékek beolvasása az űrlap mezőkből vagy más forrásokból
@@ -142,12 +205,14 @@ setInterval(() => {
                 let opPic = ``;
                 if(user.op_room_id == roomID) 
                 {
-                    opPic = `<span><img src="{{asset('images/roomicons/szobaop.png')}}" class="min32px" title="Szoba operátor"></span`;
+                    opPic = `<span><img src="{{asset('images/roomicons/szobaop.png')}}" class="min32px" title="Szoba operátor"></span>
+                                <a href="#" class="ban" id="ban-user-${user.id}" data-bs-toggle="modal" data-bs-target="#userbanModal"  title="Felhasználó tiltása" onclick="UserBan(${user.id})"><i class="fas fa-ban"></i></a> `;
                 }
 
                 if(user.p_id == 1) 
                 {
-                    opPic = opPic +`<span><img src="{{asset('images/roomicons/admin.png')}}" class="min32px" title="Adminisztrátor"></span`;
+                    opPic = opPic +`<span><img src="{{asset('images/roomicons/admin.png')}}" class="min32px" title="Adminisztrátor"></span>
+                    <a href="#" class="ban" id="ban-user-${user.id}" data-bs-toggle="modal" data-bs-target="#userbanModal" title="Felhasználó tiltása" onclick="UserBan(${user.id})"><i class="fas fa-ban"></i></a>`;
                 }
 
                 userDiv.innerHTML = `
@@ -156,7 +221,7 @@ setInterval(() => {
                         <span class="user-name">${user.username}</span>
                         <div class="user-icons">
                             <!-- Dinamikus linkek létrehozása -->
-                            <a href="/get/user/view/${user.id}" target="_blank">
+                            <a href="/user/generalinfo/${user.id}" target="_blank">
                                 <i class="fa fa-address-book"></i>
                             </a>
                             <i class="fa-solid fa-phone"></i>
@@ -177,14 +242,31 @@ setInterval(() => {
     .catch(error => console.error('Error:', error));
 }, 1700);
 
+
+/*befejezni hogy az inputokat legyenek feltoltve a modal kattinttaskor*/
+function UserBan(id)
+{
+   
+}
+
+
+function UserUnban(id)
+{
+   
+}
+
+function banFunction()
+{
+    alert("bannolva lesz");
+}
+
+
 </script>
 
 
 
 
 @endsection
-
-<!--
 <script type="importmap">
     {
         "imports": {
@@ -206,57 +288,43 @@ setInterval(() => {
             Paragraph,
             Link,
             List,
-            Heading, SourceEditing
+            Heading, 
+            SourceEditing,
+            Image,               
+            ImageToolbar,        
+            ImageUpload,         
+            CloudServices   
     } from 'ckeditor5';
 
     ClassicEditor
-        .create(document.querySelector('#sendmessage'), {
-            plugins: [   Essentials, Bold, Italic, FontSize, FontFamily, 
-            FontColor, FontBackgroundColor, Paragraph, Link, List, Heading, SourceEditing],
-            toolbar: {
-                items: [
-                    'undo', 'redo', '|',  'heading', '|', 'bold', 'italic', '|',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
-                'link', 'bulletedList', 'numberedList', '|', 'sourceEditing'
-                ]
-            },
-            heading: {
-                    options: [
-                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
-                    ]
-                },
-            fontSize: {
-                options: [
-                    'tiny',
-                    'small',
-                    'default',
-                    'big',
-                    'huge'
-                ]
-            },
-            fontFamily: {
-                options: [
-                    'default',
-                    'Arial, Helvetica, sans-serif',
-                    'Courier New, Courier, monospace',
-                    'Georgia, serif',
-                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                    'Tahoma, Geneva, sans-serif',
-                    'Times New Roman, Times, serif',
-                    'Trebuchet MS, Helvetica, sans-serif',
-                    'Verdana, Geneva, sans-serif'
-                ]
+    .create(document.querySelector('#sendmessage'), {
+        plugins: [
+            Essentials, Bold, Italic, FontSize, FontFamily, FontColor,
+            FontBackgroundColor, Paragraph, Link, List, Heading,
+            SourceEditing, Image, ImageToolbar, ImageUpload, CloudServices
+        ],
+        toolbar: {
+            items: [
+                'undo', 'redo', '|', 'heading', '|', 'bold', 'italic', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
+                'link', 'bulletedList', 'numberedList', '|', 'imageUpload',
+                'sourceEditing'
+            ]
+        },
+        image: {
+            toolbar: [ 'imageTextAlternative', 'imageStyle:full', 'imageStyle:side' ]
+        },
+        simpleUpload: {
+            uploadUrl: '{{ route("upload.image") }}',  // A szerveroldali feltöltési URL
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
-
-
-        })
-        .then(editor => {
-            window.editor = editor;
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script> - -->
+        },
+    })
+    .then(editor => {
+        window.editor = editor;
+    })
+    .catch(error => {
+        console.error(error);
+    });
+</script> 
