@@ -66,4 +66,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(RoomOperators::class, 'id','user_id');
     }
+
+    public function latestlog()
+    {
+        return $this->belongsTo(UserLog::class,'id','user_id');
+    }
+    
 }

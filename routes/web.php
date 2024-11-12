@@ -75,6 +75,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('user-ip-list', [App\Http\Controllers\UserLogsController::class, 'UserIpList'])->name('UserLogs.IpList');
     Route::get('user-ip-list/export', [App\Http\Controllers\UserLogsController::class, 'export'])->name('UserLogs.export');
+   
+    Route::get('search-user-ip', [App\Http\Controllers\UserLogsController::class, 'searchbyuser'])->name('UserLogs.search.user.list');
+    Route::get('user/{userId}/export', [App\Http\Controllers\UserLogsController::class, 'exportUserData'])->name('userlogs.export.byuserid');
 
     Route::get('radios', [App\Http\Controllers\RadioController::class, 'index'])->name('radio.index');
     Route::get('radio/add', [App\Http\Controllers\RadioController::class, 'Create'])->name('radio.create');
