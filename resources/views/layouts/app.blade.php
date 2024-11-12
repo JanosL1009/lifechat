@@ -357,7 +357,7 @@
 
 
           <section class="section">
-            <div class="container-fluid">
+            <div class="container-fluid" id="chatpApp">
                 @yield('content')
             </div>
           </section>
@@ -585,5 +585,40 @@ document.addEventListener('DOMContentLoaded', function() {
 });
    
     </script>
+    <script>
+        const userid = {{ \Auth::id() }}; 
+        
+        async function EnteringTheRoom(room_id) {
+            const url = "{{ route('enteringChatRoom.post') }}";
+            
+            try {
+                // Fetch kérés küldése a szerverre
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token a biztonság érdekében
+                    },
+                    body: JSON.stringify({
+                        userid: userid,
+                        room_id: room_id
+                    })
+                });
+        
+                const result = await response.json();
+        
+                if (response.ok && result.result === 1) {
+                    
+                    alert('Sikeresen beléptél a szobába!');
+                    // További logika itt (pl. átirányítás a chat szobára)
+                } else {
+                    alert('Már be vagy lépve ebbe a szobába! ');
+                }
+            } catch (error) {
+                console.error('Hiba történt a kérés során:', error);
+                alert('Valami hiba történt, próbáld újra később.');
+            }
+        }
+        </script>
 </body>
 </html>
