@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\UserBan;
 use App\Models\UserLog;
 
 class ChatController extends Controller
@@ -96,5 +97,34 @@ class ChatController extends Controller
         return response()->json(['url' => asset('storage/' . $imagePath)]);
     
     
+    }
+
+    public function BannedList()
+    {
+        $banlist = UserBan::with('user')->with('room')->with('banmode')->paginate(20);
+        
+
+        return view('banlist')->with('banlist',$banlist);
+    }
+
+    public function UnBan_Post(Request $request)
+    {
+
+        $request->validate([
+            'banid' => 'required|integer|exists:user_bans,id', 
+        ]);
+
+        try {
+            $banid = $request->input('banid');
+            $res = UserBan::where('id', $banid)->delete();
+
+            if ($res) {
+                return response()->json(['success' => true], 200);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Nem sikerült törölni a rádiót.'], 400);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Hiba lépett fel a kérés közben.'], 500);
+        }
     }
 }

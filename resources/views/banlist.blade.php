@@ -7,11 +7,8 @@
             <img src="{{ asset('images/lifechat.gif') }}" alt="">
         </div>      
         <div class="row">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 style="text-align:center;">Rádiók</h1> 
-                <div>
-                    <a href="{{route('admin.radio.create')}}" class="btn btn-primary">Új rádió hozzáadása</a> 
-                </div>
+            <div class="d-flex justify-content-center mb-3">
+                <h1 style="text-align:center;">Bannolt személyek</h1> 
             </div>
             @if(session('success'))
                 <div class="alert alert-success" role="alert">
@@ -26,20 +23,21 @@
             <table class="table table-striped text-center">
                 <thead>
                     <tr>
-                        <th>Rádió neve</th>
-                        <th>Rádió linkje</th>
+                        <th>Felhasználó neve</th>
+                        <th>Szoba neve</th>
+                        <th>Ban ideje</th>
                         <th>Műveletek</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($radios as $radio)
+                    @foreach($banlist as $banl)
                     <tr>
-                        <td>{{$radio->radioName }}</td>
-                        <td>{{$radio->radioURL}}</td>
+                        <td>{{$banl->user->username }}</td>
+                        <td>{{$banl->room->name}}</td>
+                        <td>{{$banl->banmode->ban_name}}</td>
                         <td>
-                            <a href="{{route('admin.radio.edit', $radio->id)}}"><i class="fa fa-pencil"></i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" data-valesid="{{$radio->id}}">
-                                <i class="fa fa-trash deltool" data-toggle="tooltip" title="Törlés" data-valesid="{{$radio->id}}"></i>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" data-valesid="{{$banl->id}}">
+                                <i class="fa-solid fa-unlock deltool" data-toggle="tooltip" title="Törlés" data-valesid="{{$banl->id}}"></i>
                             </a>
                         </td>
                     </tr>
@@ -47,7 +45,7 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-center">
-                {{ $radios->links() }}
+                {{ $banlist->links() }}
             </div>
             <div id="deleteEmployeeModal" class="modal fade">
                 <div class="modal-dialog">
@@ -61,7 +59,7 @@
                             <p style="color: #ff0000;">A törlés gomb megnyomása után végleg törlődik az adatbázisból!</p>
                         </div>
                         <div class="modal-footer">
-                            <input type="number" class="d-none" id="radioid" name="radioid" value="-1">
+                            <input type="number" class="d-none" id="banid" name="banid" value="-1">
                             <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Mégse">
                             <input type="button" id="esemenyTorlesBtn" class="btn btn-danger" value="Törlés">
                         </div>
@@ -82,21 +80,21 @@
         element.addEventListener('click', function (e) {
             e.preventDefault();
             const id = this.dataset.valesid; 
-            document.getElementById('radioid').value = id;
+            document.getElementById('banid').value = id;
 
             deleteModal.show(); 
         });
     });
 
     document.getElementById('esemenyTorlesBtn').addEventListener('click', function () {
-        let radio_id = document.getElementById('radioid').value; 
-        fetch('{{ url('admin/radio/delete/post') }}', {
+        let ban_id = document.getElementById('banid').value; 
+        fetch('{{ url('admin/unban/post') }}', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
-            body: JSON.stringify({ radioid: radio_id }) 
+            body: JSON.stringify({ banid: ban_id }) 
         })
         .then(response => {
             if (!response.ok) {

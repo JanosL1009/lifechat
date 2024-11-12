@@ -84,5 +84,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('radio/edit/post', [App\Http\Controllers\RadioController::class, 'Edit_Post'])->name('radio.edit.post');
     Route::post('radio/delete/post', [App\Http\Controllers\RadioController::class, 'Delete'])->name('radio.delete.post');
 
+    Route::get('banned/list', [App\Http\Controllers\ChatController::class, 'BannedList'])->name('banned.list.index');
+    Route::post('unban/post', [App\Http\Controllers\ChatController::class, 'UnBan_Post'])->name('banned.unban.post');
 
+    
 });
