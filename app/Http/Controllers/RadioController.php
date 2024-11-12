@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
 use App\Models\Radio;
 use Exception;
-=======
->>>>>>> 985232e8bcaa27e74ec104e2447f6f244243db63
 use Illuminate\Http\Request;
 
 class RadioController extends Controller
 {
-<<<<<<< HEAD
     public function index()
     {
         $radios = Radio::paginate(20);
@@ -88,7 +84,4 @@ class RadioController extends Controller
             return response()->json(['success' => false, 'message' => 'Hiba lépett fel a kérés közben.'], 500);
         }
     }
-=======
-    //
->>>>>>> 985232e8bcaa27e74ec104e2447f6f244243db63
 }
