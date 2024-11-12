@@ -68,4 +68,19 @@ class ApiController extends Controller
         $room_id = 0;
         $user_id = 0;
     } 
+
+
+    public function loadRoomContent(Request $request)
+    {
+        $roomId = $request->room_id;
+        $room = Room::find($roomId);
+
+       // $messages = Message::where('room_id', $roomId)->orderBy('created_at', 'desc')->get();
+
+        $html = view('ChatRooms.partials.chatRoom',["room" => $room])->render();
+
+        return response()->json(['html' => $html]);
+    }
+
+
 }

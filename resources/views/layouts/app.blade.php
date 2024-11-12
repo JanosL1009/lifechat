@@ -357,7 +357,7 @@
 
 
           <section class="section">
-            <div class="container-fluid" id="chatpApp">
+            <div class="container-fluid" id="chatApp">
                 @yield('content')
             </div>
           </section>
@@ -466,8 +466,8 @@
                     roomDiv.innerHTML = `
                         <img src="/images/${room.picture}" alt="Room Icon" class="room-icon">
                         <div class="room-details">
-                            <a href="{{ url('chat/szoba') }}/${room.id}">
-                                <span class="room-name">${room.name}</span>
+                            <a href="#" class="room-btn"  data-room-id="${room.id}" onclick="enteringRoom(${room.id})">
+                                <span class="room-name" id="room-id-${room.id}">${room.name}</span>
                             </a>
                             <div class="room-count-icons">
                                 <span class="room-count">Létszám: <span class="room-number">${room.number_of_employees}</span></span>
@@ -619,6 +619,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Valami hiba történt, próbáld újra később.');
             }
         }
+        </script>
+        <script>
+            function enteringRoom(room_id)
+            {
+                
+                const chatContent = document.getElementById('chatMessages');
+
+               
+                    
+                        const roomId = room_id;
+                       
+                        // AJAX kérés a kiválasztott szoba adatainak betöltésére
+                        fetch('{{route('xhr.rooms.list')}}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                            },
+                            body: JSON.stringify({ room_id: roomId })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Chat felület frissítése
+                            document.getElementById('roomName').innerHTML = document.getElementById('room-id-'+room_id).innerHTML;
+                            chatContent.innerHTML = data.html;
+                        })
+                        .catch(error => console.error('Hiba a betöltés során:', error));
+                    
+                
+            }
+            
+
         </script>
 </body>
 </html>
