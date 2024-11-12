@@ -87,35 +87,44 @@
     });
 
     document.getElementById('esemenyTorlesBtn').addEventListener('click', function () {
-        let ban_id = document.getElementById('banid').value; 
-        fetch('{{ url('admin/unban/post') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ banid: ban_id }) 
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(text => {
-                    throw new Error(text); 
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                location.reload(); 
-            } else {
-                alert('Hiba történt a törlés során: ' + (data.message || 'Ismeretlen hiba')); 
-            }
-        })
-        .catch(error => {
-            console.error('Hiba történt:', error);
-            alert('Hiba történt a törlés során: ' + error.message);
-        });
+    let ban_id = document.getElementById('banid').value;
+    fetch('{{ url('admin/unban/post') }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ banid: ban_id })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                throw new Error(text);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            const successMessage = document.createElement('div');
+            successMessage.classList.add('alert', 'alert-success', 'mt-3');
+            successMessage.innerText = data.message || 'Sikeresen feloldottad!';
+            document.querySelector('.container').prepend(successMessage);
+
+            // Optionally reload the page after a brief delay or clear the row
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        } else {
+            alert('Hiba történt a törlés során: ' + (data.message || 'Ismeretlen hiba'));
+        }
+    })
+    .catch(error => {
+        console.error('Hiba történt:', error);
+        alert('Hiba történt a törlés során: ' + error.message);
     });
+});
+
 });
 
     </script>
