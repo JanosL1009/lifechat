@@ -44,6 +44,21 @@ Route::post('xhr/room/content', [App\Http\Controllers\ApiController::class, 'loa
 Route::post('chat/user/ban/set', [App\Http\Controllers\ApiController::class, 'setUserban'])->name('Userban.Ban')->middleware('auth');
 Route::post('chat/user/ban/unban', [App\Http\Controllers\ApiController::class, 'setUserUnban'])->name('Userban.Unban')->middleware('auth');
 
+Route::get('friends', [App\Http\Controllers\FriendsController::class, 'index'])->name('friends.index');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/friend/request/{user}', [App\Http\Controllers\FriendsController::class, 'sendRequest'])->name('friend.request');
+    Route::post('/friend/accept/{user}', [App\Http\Controllers\FriendsController::class, 'acceptRequest'])->name('friend.accept');
+    Route::post('/friend/reject/{user}', [App\Http\Controllers\FriendsController::class, 'rejectRequest'])->name('friend.reject');
+});
+
+Route::get('/friend/requests', [App\Http\Controllers\FriendsController::class, 'incomingRequests'])->name('friend.requests');
+Route::post('/friend/request/accept/{id}', [App\Http\Controllers\FriendsController::class, 'acceptRequest']);
+Route::post('/friend/request/reject/{id}', [App\Http\Controllers\FriendsController::class, 'rejectRequest']);
+
+Route::post('/friend/request', [App\Http\Controllers\FriendsController::class, 'sendRequest'])->name('friend.request');
+Route::get('/friend/requests/count', [App\Http\Controllers\FriendsController::class, 'countRequests'])->name('friend.requests.count');
+
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('room-list', [App\Http\Controllers\ChatRoomController::class, 'adminRoomList'])->name('roomlist');

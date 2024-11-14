@@ -323,6 +323,8 @@
                         <a href="{{route('admin.radio.index')}}" class="ml-15 " title="Rádiók kezelése - adminisztrátor"><i class="far fa-file-audio"></i></a>
                         <a href="{{route('admin.banned.list.index')}}" class="ml-15 " title="Tiltott felhasználók - adminisztrátor"><i class="fas fa-user-slash"></i></a>
                         <a href="{{route('admin.UserLogs.IpList')}}" class="ml-15 " title="IP lista - adminisztrátor"><i class="fas fa-history"></i></a>
+                        <a href="{{route('friends.index')}}" class="ml-15 " title="Barátok"><i class="fas fa-user-friends"></i></a>
+
                     </div>
                   
                   </div>
