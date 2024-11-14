@@ -21,14 +21,55 @@
                     <th>Név</th>
                     <th>Email cím</th>
                     <th>Profilkép</th>
+                    <th>Állapot</th>
                     <th>Műveletek</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        
-                    </tr>
+                    @foreach ($allFriendsAndRequests as $item)
+                <tr>
+                    <td>
+                        @if ($item->user_id == auth()->user()->id)
+                            {{ $item->friend->username }}  <!-- Ha a barát id-ja szerepel a friend_id-ban -->
+                        @else
+                            {{ $item->user->username }}    <!-- Ha a user id-ja szerepel a user_id-ban -->
+                        @endif
+                    </td>
+                    <td>
+                        @if ($item->user_id == auth()->user()->id)
+                            {{ $item->friend->email }} <!-- Ha a barát id-ja szerepel a friend_id-ban -->
+                        @else
+                            {{ $item->user->email }}   <!-- Ha a user id-ja szerepel a user_id-ban -->
+                        @endif
+                    </td>
+                    <td>
+                        @if ($item->user_id == auth()->user()->id)
+                            <img src="{{ asset('profilepicture/'.$item->friend->profilepicture) }}" alt="Profilkép" width="50">
+                        @else
+                            <img src="{{ asset('profilepicture/'.$item->user->profilepicture) }}" alt="Profilkép" width="50">
+                        @endif
+                    </td>
+                    <td>
+                        @if($item->status == 1)
+                            Barát
+                        @elseif($item->status == '0')
+                            Baráti kérelem elküldve
+                        @endif
+                    </td> 
+                    <td>
+                        @if($item->status == 1)
+                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteFriend({{ $item->id }})">Eltávolítás</button>
+                        @elseif($item->status == 0)
+                            <button type="button" class="btn btn-warning btn-sm" onclick="cancelRequest({{ $item->id }})">Visszavonás</button>
+                        @endif
+                    </td>                
+                </tr>
+            @endforeach
                 </tbody>
-            </table>            
+            </table>    
+            <div class="d-flex justify-content-center">
+                {{ $friends->links() }}
+                {{ $sentRequests->links() }}
+            </div>        
         </div>
     </div>
 </div>
@@ -63,7 +104,7 @@
             </div>
             <div class="modal-body">
                 <ul id="friendRequestsList" class="list-group">
-                    <!-- Barátfelkérések dinamikus betöltése ide -->
+                    <!-- itt jelennek meg a barat felkeresek -->
                 </ul>
             </div>
         </div>
@@ -75,33 +116,35 @@
         updateFriendRequestsCount();
     
         document.getElementById('addFriendForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-    
-            let friendIdentifier = document.getElementById('friendIdentifier').value;
-            let csrfToken = document.querySelector('input[name="_token"]').value;
-    
-            fetch("{{ route('friend.request') }}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                body: JSON.stringify({ friend_identifier: friendIdentifier })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Barát kérés elküldve!');
-                    document.getElementById('addFriendForm').reset();
-                    let modal = bootstrap.Modal.getInstance(document.getElementById('addFriendModal'));
-                    modal.hide();
-                    updateFriendRequestsCount(); 
-                } else {
-                    alert(data.message || 'Hiba történt!');
-                }
-            })
-            .catch(error => console.error('Hiba:', error));
-        });
+        e.preventDefault();
+
+        let friendIdentifier = document.getElementById('friendIdentifier').value;
+        let csrfToken = document.querySelector('input[name="_token"]').value;
+
+        fetch("{{ route('friend.request') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({ friend_identifier: friendIdentifier })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Barát kérés elküldve!');
+                document.getElementById('addFriendForm').reset();
+                let modal = bootstrap.Modal.getInstance(document.getElementById('addFriendModal'));
+                modal.hide();
+                updateFriendRequestsCount(); 
+
+                location.reload();
+            } else {
+                alert(data.message || 'Hiba történt!');
+            }
+        })
+        .catch(error => console.error('Hiba:', error));
+    });
     
         const friendRequestsModal = document.getElementById('friendRequestsModal');
         friendRequestsModal.addEventListener('show.bs.modal', function () {
@@ -158,6 +201,69 @@
                 updateFriendRequestsCount(); 
             });
     }
-    </script>
+    function cancelRequest(id) {
+    fetch(`{{ url('/friend/request/cancel') }}/${id}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            location.reload();  
+            updateFriendRequestsCount();
+        } else {
+            alert(data.message || 'Hiba történt a barátfelkérés visszavonásakor');
+        }
+    })
+    .catch(error => console.error('Hiba:', error));
+}
+function deleteFriend(friendId) {
+    if (confirm('Biztosan törölni szeretnéd ezt a barátot?')) {
+        fetch(`{{ url('/friend/delete') }}/${friendId}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Barát törölve!');
+                location.reload();  
+            } else {
+                alert(data.message || 'Hiba történt a törléskor!');
+            }
+        })
+        .catch(error => console.error('Hiba:', error));
+    }
+}
+function cancelRequest(requestId) {
+    if (confirm('Biztosan vissza akarod vonni a barátfelkérést?')) {
+        fetch(`{{ url('/friend/request/cancel') }}/${requestId}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('A barátfelkérés visszavonva!');
+                location.reload();  
+            } else {
+                alert(data.message || 'Hiba történt a barátfelkérés visszavonásakor!');
+            }
+        })
+        .catch(error => console.error('Hiba:', error));
+    }
+}
+
+</script>
     
 @endsection

@@ -42,5 +42,13 @@ class Friends extends Model
     {
         $this->friendRequests()->updateExistingPivot($user->id, ['status' => 'rejected']);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');  // A kapcsolat a user_id alapján
+    }
 
+    public function friend()
+    {
+        return $this->belongsTo(User::class, 'friend_id');  // A kapcsolat a friend_id alapján
+    }
 }
