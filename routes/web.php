@@ -65,7 +65,7 @@ Route::post('/friend/request/cancel/{id}', [App\Http\Controllers\FriendsControll
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('room-list', [App\Http\Controllers\ChatRoomController::class, 'adminRoomList'])->name('roomlist')->middleware('auth')->middleware('auth');
+    Route::get('room-list', [App\Http\Controllers\ChatRoomController::class, 'adminRoomList'])->name('roomlist')->middleware('auth')->middleware('permission');
 
     Route::get('room/new', [App\Http\Controllers\ChatRoomController::class, 'NewRoom'])->name('NewRoom')->middleware('auth');
     Route::post('room/create/post', [App\Http\Controllers\ChatRoomController::class, 'CreateNewRoom'])->name('room.createnew.post')->middleware('auth');

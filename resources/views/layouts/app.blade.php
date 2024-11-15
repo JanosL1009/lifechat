@@ -317,14 +317,17 @@
                         <a href="{{route('get.rooms.list')}}" class="ml-15 " title="Szobák"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
                         <a href="#" class="ml-15" data-bs-toggle="modal" data-bs-target="#radiosModal"  ><i class="fa-solid fa-music"></i></a>
                         <a href="{{route('friends.index')}}" class="ml-15 " title="Barátok"><i class="fas fa-user-friends"></i></a>
-                        <a href="#" class="ml-15" style="color: red;"> | </a>
-                        <a href="{{route('admin.szemely.kereses')}}" class="ml-15 b" title="Felhasználó keresés - adminisztrátor"><i class="fa-solid fa-magnifying-glass g-color-red"></i></a> 
-                        <a href="{{route('admin.roomlist')}}" class="ml-15 " title="Szobák kezelése - adminisztrátor"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
-                        <a href="{{route('admin.tags.list')}}" class="ml-15 " title="Címkék, tagek kezelése - adminisztrátor"><i class="fa-solid fa-tag bg-color-red"></i></a>
-                        <a href="{{route('admin.radio.index')}}" class="ml-15 " title="Rádiók kezelése - adminisztrátor" target="_blank"><i class="far fa-file-audio"></i></a>
-                        <a href="{{route('admin.banned.list.index')}}" class="ml-15 " title="Tiltott felhasználók - adminisztrátor" target="_blank"><i class="fas fa-user-slash"></i></a>
-                        <a href="{{route('admin.UserLogs.IpList')}}" class="ml-15 " title="IP lista - adminisztrátor" target="_blank"><i class="fas fa-history"></i></a>
+                        @isAdmin
+                            <a href="#" class="ml-15" style="color: red;"> | </a>
+                            <a href="{{route('admin.szemely.kereses')}}" class="ml-15 b" title="Felhasználó keresés - adminisztrátor"><i class="fa-solid fa-magnifying-glass g-color-red"></i></a> 
+                            <a href="{{route('admin.roomlist')}}" class="ml-15 " title="Szobák kezelése - adminisztrátor"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
+                            <a href="{{route('admin.tags.list')}}" class="ml-15 " title="Címkék, tagek kezelése - adminisztrátor"><i class="fa-solid fa-tag bg-color-red"></i></a>
+                            <a href="{{route('admin.radio.index')}}" class="ml-15 " title="Rádiók kezelése - adminisztrátor" target="_blank"><i class="far fa-file-audio"></i></a>
+                            <a href="{{route('admin.banned.list.index')}}" class="ml-15 " title="Tiltott felhasználók - adminisztrátor" target="_blank"><i class="fas fa-user-slash"></i></a>
+                            <a href="{{route('admin.UserLogs.IpList')}}" class="ml-15 " title="IP lista - adminisztrátor" target="_blank"><i class="fas fa-history"></i></a>
 
+                        @endisAdmin
+                      
                        
                     </div>
                   
