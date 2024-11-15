@@ -324,6 +324,8 @@
                         <a href="{{route('admin.banned.list.index')}}" class="ml-15 " title="Tiltott felhasználók - adminisztrátor" target="_blank"><i class="fas fa-user-slash"></i></a>
                         <a href="{{route('admin.UserLogs.IpList')}}" class="ml-15 " title="IP lista - adminisztrátor" target="_blank"><i class="fas fa-history"></i></a>
 
+                        <a href="{{route('friends.index')}}" class="ml-15 " title="Barátok"><i class="fas fa-user-friends"></i></a>
+
                     </div>
                   
                   </div>

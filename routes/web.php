@@ -43,6 +43,25 @@ Route::post('xhr/room/content', [App\Http\Controllers\ApiController::class, 'loa
 //userek bannolasa az altalnos szobakbol
 Route::post('chat/user/ban/set', [App\Http\Controllers\ApiController::class, 'setUserban'])->name('Userban.Ban')->middleware('auth');
 Route::post('chat/user/ban/unban', [App\Http\Controllers\ApiController::class, 'setUserUnban'])->name('Userban.Unban')->middleware('auth');
+//baratok listaja - elküldött meghivok listaja
+Route::get('friends', [App\Http\Controllers\FriendsController::class, 'index'])->name('friends.index')->middleware('auth');
+
+// baratmeghivok megjelenitese, fogadasa, elutasitasa
+Route::get('/friend/requests', [App\Http\Controllers\FriendsController::class, 'incomingRequests'])->name('friend.requests')->middleware('auth');
+Route::post('/friend/request/accept/{id}', [App\Http\Controllers\FriendsController::class, 'acceptRequest']);
+Route::post('/friend/request/reject/{id}', [App\Http\Controllers\FriendsController::class, 'rejectRequest']);
+
+
+// elkuldi a baratmeghivot
+Route::post('/friend/request', [App\Http\Controllers\FriendsController::class, 'sendRequest'])->name('friend.request');
+// megszamolja hany barat felkeresünk van
+Route::get('/friend/requests/count', [App\Http\Controllers\FriendsController::class, 'countRequests'])->name('friend.requests.count')->middleware('auth');
+
+//baratkerelem visszavonasa
+Route::post('/friend/request/cancel/{id}', [App\Http\Controllers\FriendsController::class, 'cancelFriendRequest'])->name('friend.request.cancel');
+//barat eltavolitasa
+Route::post('/friend/delete/{id}', [App\Http\Controllers\FriendsController::class, 'deleteFriend'])->name('friend.delete');
+Route::post('/friend/request/cancel/{id}', [App\Http\Controllers\FriendsController::class, 'cancelRequest'])->name('friend.request.cancel');
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
