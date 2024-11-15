@@ -304,7 +304,7 @@
         <header class="header">
             <div class="container-fluid">
               <div class="row">
-                <div class="col-lg-5 col-md-5 col-6">
+                <div class="col-lg-7 col-md-7 col-12">
                   <div class="header-left d-flex align-items-center">
                     <div class="menu-toggle-btn mr-15">
                       <button id="menu-toggle" class="main-btn primary-btn btn-hover">
@@ -316,6 +316,7 @@
                         <a href="#" class="ml-15"><i class="fas fa-cog"></i></a>
                         <a href="{{route('get.rooms.list')}}" class="ml-15 " title="Szobák"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
                         <a href="#" class="ml-15" data-bs-toggle="modal" data-bs-target="#radiosModal"  ><i class="fa-solid fa-music"></i></a>
+                        <a href="{{route('friends.index')}}" class="ml-15 " title="Barátok"><i class="fas fa-user-friends"></i></a>
                         <a href="#" class="ml-15" style="color: red;"> | </a>
                         <a href="{{route('admin.szemely.kereses')}}" class="ml-15 b" title="Felhasználó keresés - adminisztrátor"><i class="fa-solid fa-magnifying-glass g-color-red"></i></a> 
                         <a href="{{route('admin.roomlist')}}" class="ml-15 " title="Szobák kezelése - adminisztrátor"><i class="fa fa-building bg-color-red" aria-hidden="true"></i></a> 
@@ -324,13 +325,12 @@
                         <a href="{{route('admin.banned.list.index')}}" class="ml-15 " title="Tiltott felhasználók - adminisztrátor" target="_blank"><i class="fas fa-user-slash"></i></a>
                         <a href="{{route('admin.UserLogs.IpList')}}" class="ml-15 " title="IP lista - adminisztrátor" target="_blank"><i class="fas fa-history"></i></a>
 
-                        <a href="{{route('friends.index')}}" class="ml-15 " title="Barátok"><i class="fas fa-user-friends"></i></a>
-
+                       
                     </div>
                   
                   </div>
                 </div>
-                <div class="col-lg-7 col-md-7 col-6">
+                <div class="col-lg-5 col-md-5 col-12">
                   <div class="header-right">
                    
                     @auth
