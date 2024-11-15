@@ -123,8 +123,14 @@
                                                 <label for="maxnumber">Létszám</label>
                                                 <input type="number" class="form-control" id="nmbofempl" name="nmbofempl" min="0">
                                             </div>
-                                            <button type="submit" class="btn btn-primary mt-3">Létrehozás</button>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="welcomemsg">Üdvözlő üzenet:</label>
+                                                <textarea name="welcomemsg" id="welcomemsg" class="form-control" cols="30" rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-3">Létrehozás</button>
                                     </div>
                                 </form>
                             </div>

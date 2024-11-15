@@ -9,13 +9,18 @@
         <div class="row">
             <div class="col-md-12 d-flex justify-content-between align-items-center mb-3 roomtitle">
                 <h1>Felhasználó IP lista</h1>
-                <a href="{{ route('admin.UserLogs.export') }}" class="btn btn-primary">Adatok exportálása</a>
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('admin.UserLogs.export') }}" class="btn btn-primary me-2">Adatok exportálása</a>
+                    <a href="{{route('admin.UserLogs.search.user.list')}}" class="btn btn-primary">Keresés</a>
+                </div>
             </div>
             <table class="table table-striped">
                 <thead>
-                    <th>Neve</th>
-                    <th>Email cím</th>
-                    <th>Ip címe</th>
+                    <tr>
+                        <th>Neve</th>
+                        <th>Email cím</th>
+                        <th>Ip címe</th>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach($useriplist as $userlist)

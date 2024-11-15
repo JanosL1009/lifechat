@@ -6,14 +6,14 @@ const cors = require('cors');
 const app = express();
 
 const corsOptions ={
-    origin:'https://lifechat.hu:3000', 
+    origin:'http://127.0.0.1:3000', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
 
 /*
 const corsOptions ={
-    origin:'http://127.0.0.1:8000', 
+    origin:'https://demo.lifechat.hu:3000', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }*/
@@ -26,9 +26,11 @@ const io = socketIo(server);
 
 io.on('connection', (socket) => {
     console.log('Új felhasználó csatlakozott: ' + socket.id);
-
+      let  msg = "Hello it vagy?";
+    // Chat üzenet fogadása és továbbítása minden csatlakozott kliensnek
     socket.on('chatmessage', (msg) => {
-        io.emit('chatmessage', "Teszt özenet"); // Mindenkinek elküldi az üzenetet
+        console.log('Új üzenet:', msg);
+        io.emit('chatmessage', msg);  // Mindenkinek elküldi a chat üzenetet
     });
 
     socket.on('disconnect', () => {

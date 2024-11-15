@@ -46,6 +46,7 @@
         </div>
     </div>
 </div>
+<!-- 
 <script>
     const userid = {{ \Auth::id() }}; 
     
@@ -82,4 +83,6 @@
     }
     </script>
 
-@endsection
+
+
+-->    @endsection

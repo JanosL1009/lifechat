@@ -81,7 +81,7 @@ class ChatRoomController extends Controller
         $newroom->number_of_employees = $request->nmbofempl;
         $newroom->describe = $request->describe;
         $newroom->status = $request->input('status');
-
+        $newroom->welcome_msg = $request->welcomemsg;
         try {
             if($newroom->save())
             {
@@ -135,7 +135,7 @@ class ChatRoomController extends Controller
         $updateroom->number_of_employees = $request->input('nmbofempl');
         $updateroom->describe = $request->input('describe');
         $updateroom->status = $request->input('status');
-
+        $updateroom->welcome_msg = $request->input('welcomemsg');
         try {
             if ($updateroom->save()) {
                 return redirect()->route('admin.roomlist')->with('success','A szoba módosítása sikeresen megtörtént!');
